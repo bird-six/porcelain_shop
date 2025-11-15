@@ -1,0 +1,395 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <!-- Banner轮播区 -->
+  <section id="carousel-container" class="relative h-[500px] overflow-hidden bg-gradient-to-r from-bluewhite/30 to-gray-100">
+    <!-- 轮播项 -->
+    <div class="carousel-item active absolute inset-0">
+      <img src="https://picsum.photos/id/152/1600/900" alt="景德镇陶瓷艺术" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative w-full h-full bg-gradient-to-r from-black/30 to-transparent">
+        <div class="absolute bottom-16 left-16 max-w-2xl">
+          <h1 class="text-5xl text-white font-serif font-bold mb-4">千年窑火，瓷韵传承</h1>
+          <p class="text-white text-lg mb-8 max-w-lg">探索景德镇千年制瓷工艺，收藏大师手作艺术精品</p>
+          <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold text-lg hover:bg-opacity-90 transition flex items-center gap-2">
+            开启艺术之旅
+            <iconify-icon class="text-xl" icon="mdi:arrow-right"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 第二个轮播项 -->
+    <div class="carousel-item absolute inset-0">
+      <img src="https://picsum.photos/id/175/1600/900" alt="青花瓷艺术" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative w-full h-full bg-gradient-to-r from-black/30 to-transparent">
+        <div class="absolute bottom-16 left-16 max-w-2xl">
+          <h1 class="text-5xl text-white font-serif font-bold mb-4">青花雅韵，匠心传承</h1>
+          <p class="text-white text-lg mb-8 max-w-lg">青花瓷是中国陶瓷艺术的瑰宝，蓝白相映间展现东方美学</p>
+          <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold text-lg hover:bg-opacity-90 transition flex items-center gap-2">
+            探索青花艺术
+            <iconify-icon class="text-xl" icon="mdi:arrow-right"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 添加第三个轮播项 -->
+    <div class="carousel-item absolute inset-0">
+      <img src="https://picsum.photos/id/177/1600/900" alt="陶艺大师作品" class="absolute inset-0 w-full h-full object-cover">
+      <div class="relative w-full h-full bg-gradient-to-r from-black/30 to-transparent">
+        <div class="absolute bottom-16 left-16 max-w-2xl">
+          <h1 class="text-5xl text-white font-serif font-bold mb-4">大师云集，匠心之作</h1>
+          <p class="text-white text-lg mb-8 max-w-lg">汇聚景德镇顶尖陶艺大师，呈现当代陶瓷艺术巅峰之作</p>
+          <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold text-lg hover:bg-opacity-90 transition flex items-center gap-2">
+            欣赏大师作品
+            <iconify-icon class="text-xl" icon="mdi:arrow-right"></iconify-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 轮播指示器 -->
+    <div id="carousel-indicators" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-4">
+      <button class="carousel-indicator" data-index="0"></button>
+      <button class="carousel-indicator" data-index="1"></button>
+      <button class="carousel-indicator" data-index="2"></button>
+    </div>
+    
+    <!-- 导航按钮  -->
+    <button id="prev-btn" class="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-30 text-white flex items-center justify-center backdrop-blur-sm">
+      <iconify-icon class="text-2xl" icon="mdi:chevron-left"></iconify-icon>
+    </button>
+    <button id="next-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white bg-opacity-30 text-white flex items-center justify-center backdrop-blur-sm">
+      <iconify-icon class="text-2xl" icon="mdi:chevron-right"></iconify-icon>
+    </button>
+  </section>
+
+  <!-- 特色陶瓷推荐 -->
+  <section class="py-16 px-10">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">特色陶瓷系列</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">传统工艺与现代设计的完美融合</p>
+    </div>
+    <!-- Bento网格布局 -->
+    <div class="bento-grid">
+      <!-- 青花瓷系列 -->
+      <div class="bento-item">
+        <div class="product-card h-full">
+          <img src="https://picsum.photos/id/28/1200/800" alt="青花瓷系列" class="product-image">
+          <div class="product-overlay"></div>
+          <div class="product-badge">畅销</div>
+          <div class="product-rating">
+            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
+            4.9
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">青花瓷系列</h3>
+            <div class="product-price">青花瓷是中国最具代表性的陶瓷艺术，以钴料在瓷胎上绘制图案，经高温烧制后呈现青蓝色花纹，典雅高贵。</div>
+          </div>
+          <div class="product-actions">
+            <button class="action-btn" title="快速查看">
+              <iconify-icon icon="mdi:eye"></iconify-icon>
+            </button>
+            <button class="action-btn" title="添加到购物车">
+              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+            </button>
+            <button class="action-btn" title="收藏">
+              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 釉里红精品 -->
+      <div class="bento-item">
+        <div class="product-card h-full">
+          <img src="https://picsum.photos/id/29/800/600" alt="釉里红精品" class="product-image">
+          <div class="product-overlay"></div>
+          <div class="product-badge">限量</div>
+          <div class="product-rating">
+            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
+            4.8
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">釉里红精品</h3>
+            <div class="product-price">釉里红是元代创烧的珍贵瓷器品种，以铜红料在釉下绘制图案，烧成后呈现鲜艳的红色，工艺难度极高。</div>
+          </div>
+          <div class="product-actions right-column">
+            <button class="action-btn" title="快速查看">
+              <iconify-icon icon="mdi:eye"></iconify-icon>
+            </button>
+            <button class="action-btn" title="添加到购物车">
+              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+            </button>
+            <button class="action-btn" title="收藏">
+              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 薄胎瓷艺 -->
+      <div class="bento-item">
+        <div class="product-card h-full">
+          <img src="https://picsum.photos/id/30/800/600" alt="薄胎瓷艺" class="product-image">
+          <div class="product-overlay"></div>
+          <div class="product-rating">
+            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
+            4.7
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">薄胎瓷艺</h3>
+            <div class="product-price">薄胎瓷以其薄如蝉翼、轻如浮云的特点著称，胎体厚度仅0.5毫米左右，透光性强，工艺精湛。</div>
+          </div>
+          <div class="product-actions right-column">
+            <button class="action-btn" title="快速查看">
+              <iconify-icon icon="mdi:eye"></iconify-icon>
+            </button>
+            <button class="action-btn" title="添加到购物车">
+              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+            </button>
+            <button class="action-btn" title="收藏">
+              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 粉彩瓷器 -->
+      <div class="bento-item">
+        <div class="product-card h-full">
+          <img src="https://picsum.photos/id/31/800/600" alt="粉彩瓷器" class="product-image">
+          <div class="product-overlay"></div>
+          <div class="product-badge">新品</div>
+          <div class="product-rating">
+            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
+            4.6
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">粉彩瓷器</h3>
+            <div class="product-price">粉彩瓷是清代创烧的釉上彩品种，色彩柔和淡雅，层次丰富，具有粉润的艺术效果，深受皇室喜爱。</div>
+          </div>
+          <div class="product-actions right-column">
+            <button class="action-btn" title="快速查看">
+              <iconify-icon icon="mdi:eye"></iconify-icon>
+            </button>
+            <button class="action-btn" title="添加到购物车">
+              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+            </button>
+            <button class="action-btn" title="收藏">
+              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 玲珑瓷 -->
+      <div class="bento-item">
+        <div class="product-card h-full">
+          <img src="https://picsum.photos/id/32/800/600" alt="玲珑瓷" class="product-image">
+          <div class="product-overlay"></div>
+          <div class="product-rating">
+            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
+            4.9
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">玲珑瓷</h3>
+            <div class="product-price">玲珑瓷在坯体上镂雕出米粒状的通花洞，然后施釉烧成，具有透光不透影的特点，精巧别致。</div>
+          </div>
+          <div class="product-actions right-column">
+            <button class="action-btn" title="快速查看">
+              <iconify-icon icon="mdi:eye"></iconify-icon>
+            </button>
+            <button class="action-btn" title="添加到购物车">
+              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+            </button>
+            <button class="action-btn" title="收藏">
+              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 颜色釉 -->
+      <div class="bento-item">
+        <div class="product-card h-full">
+          <img src="https://picsum.photos/id/33/800/600" alt="颜色釉" class="product-image">
+          <div class="product-overlay"></div>
+          <div class="product-badge">促销</div>
+          <div class="product-rating">
+            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
+            4.5
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">颜色釉</h3>
+            <div class="product-price">颜色釉瓷器通过不同金属氧化物在高温下呈现各种色彩，如钧红、天青、茶叶末等，色彩丰富多变。</div>
+          </div>
+          <div class="product-actions right-column">
+            <button class="action-btn" title="快速查看">
+              <iconify-icon icon="mdi:eye"></iconify-icon>
+            </button>
+            <button class="action-btn" title="添加到购物车">
+              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+            </button>
+            <button class="action-btn" title="收藏">
+              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 文化故事区 -->
+  <section class="py-16 bg-porcelain">
+    <div class="max-w-4xl mx-auto px-10">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">千年瓷都的文化传承</h2>
+        <div class="w-24 h-1 bg-goldline mx-auto"></div>
+      </div>
+      <!-- 时间轴布局 -->
+      <div class="space-y-12">
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">1369年</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md relative before:absolute before:w-0.5 before:h-full before:bg-goldline before:left-[-33px] before:top-0">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">明朝官窑设立</h3>
+            <p class="text-gray-600 leading-relaxed">
+              明朝政府在景德镇设置御器厂，专门为皇家烧制瓷器，推动了景德镇陶瓷艺术的繁荣发展，
+              青花瓷器达到前所未有的艺术高峰。
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">1712年</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md relative before:absolute before:w-0.5 before:h-full before:bg-goldline before:left-[-33px] before:top-0">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">珐琅彩传入</h3>
+            <p class="text-gray-600 leading-relaxed">
+              欧洲传来的珐琅彩技术与中国传统工艺结合，创造出精美绝伦的珐琅彩瓷，
+              成为清代官窑的代表作，在瓷器史上留下浓墨重彩的一笔。
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">当代</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md relative before:absolute before:w-0.5 before:h-full before:bg-goldline before:left-[-33px] before:top-0">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">传承与创新</h3>
+            <p class="text-gray-600 leading-relaxed">
+              传统工艺与现代设计融合，新一代陶艺家在传承千年技艺的同时，
+              探索陶瓷艺术的新表达，推动景德镇陶瓷走向世界舞台。
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-16">
+        <button class="border-2 border-goldline text-goldline px-8 py-2.5 rounded-full font-medium hover:bg-goldline hover:text-white transition">
+          探索更多文化故事
+        </button>
+      </div>
+    </div>
+  </section>
+  <!-- 艺术家专栏 -->
+  <section class="py-16 px-10">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">大师艺术专栏</h2>
+      <p class="text-gray-600">领略国家级陶瓷艺术大师的匠心之作</p>
+    </div>
+    <div class="grid grid-cols-4 gap-8">
+      <!-- 艺术家卡片 -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+        <img alt="王大师青花瓷作品" class="w-full h-56 object-cover" id="7" src="https://modao.cc/agent-py/workspace/690f4464800ca59e5bfaf5e7/generated_images/916edaa768c244d2817bdc162b4c10e2.jpg">
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-gray-800 mb-1">王怀俊大师</h3>
+          <p class="text-gray-600 text-sm mb-3">国家级工艺美术大师</p>
+          <div class="flex items-center">
+            <div class="text-goldline font-semibold text-lg">5件作品</div>
+            <button class="ml-auto text-bluewhite font-medium">查看作品集</button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+        <img alt="李大师釉里红作品" class="w-full h-56 object-cover" id="8" src="https://modao.cc/agent-py/workspace/690f4464800ca59e5bfaf5e7/generated_images/9078d79760d9464fb26947f1448436d0.jpg">
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-gray-800 mb-1">李文跃大师</h3>
+          <p class="text-gray-600 text-sm mb-3">非物质文化遗产传承人</p>
+          <div class="flex items-center">
+            <div class="text-goldline font-semibold text-lg">8件作品</div>
+            <button class="ml-auto text-bluewhite font-medium">查看作品集</button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+        <img alt="张大师雕塑瓷作品" class="w-full h-56 object-cover" id="9" src="https://modao.cc/agent-py/workspace/690f4464800ca59e5bfaf5e7/generated_images/33877b3ad3dc4648aa70a9992f3b61df.jpg">
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-gray-800 mb-1">张松茂大师</h3>
+          <p class="text-gray-600 text-sm mb-3">中国工艺美术大师</p>
+          <div class="flex items-center">
+            <div class="text-goldline font-semibold text-lg">6件作品</div>
+            <button class="ml-auto text-bluewhite font-medium">查看作品集</button>
+          </div>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition">
+        <img alt="陈大师颜色釉作品" class="w-full h-56 object-cover" id="10" src="https://modao.cc/agent-py/workspace/690f4464800ca59e5bfaf5e7/generated_images/665828ca111a4b08a9edd0cedb876cfa.jpg">
+        <div class="p-5">
+          <h3 class="font-bold text-lg text-gray-800 mb-1">陈敏大师</h3>
+          <p class="text-gray-600 text-sm mb-3">省级工艺美术大师</p>
+          <div class="flex items-center">
+            <div class="text-goldline font-semibold text-lg">7件作品</div>
+            <button class="ml-auto text-bluewhite font-medium">查看作品集</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- 会员专享区 -->
+  <section class="py-16 bg-gradient-to-br from-porcelain to-gray-100 px-10">
+    <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-10 border border-goldline">
+      <div class="grid grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">会员专属权益</h2>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start">
+              <iconify-icon class="text-2xl text-goldline mt-0.5 mr-3" icon="mdi:star"></iconify-icon>
+              <span>独家大师作品优先购买权</span>
+            </li>
+            <li class="flex items-start">
+              <iconify-icon class="text-2xl text-goldline mt-0.5 mr-3" icon="mdi:star"></iconify-icon>
+              <span>每月限量款陶瓷专属通道</span>
+            </li>
+            <li class="flex items-start">
+              <iconify-icon class="text-2xl text-goldline mt-0.5 mr-3" icon="mdi:star"></iconify-icon>
+              <span>陶瓷艺术创作工坊VIP席位</span>
+            </li>
+            <li class="flex items-start">
+              <iconify-icon class="text-2xl text-goldline mt-0.5 mr-3" icon="mdi:star"></iconify-icon>
+              <span>会员专享9折及免运费优惠</span>
+            </li>
+          </ul>
+          <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-90 transition">
+            立即加入会员
+          </button>
+        </div>
+        <div>
+          <div class="bg-gray-100 border border-gray-200 rounded-xl p-6 h-full flex flex-col justify-center">
+            <div class="text-center mb-6">
+              <iconify-icon class="text-4xl text-goldline" icon="mdi:crown"></iconify-icon>
+              <h3 class="text-xl font-bold text-gray-800 mt-2">高级会员专享</h3>
+            </div>
+            <div class="flex items-center justify-center">
+              <div class="bg-[url('https://picsum.photos/id/34/300/300')] bg-cover bg-center w-40 h-40 rounded-lg border-4 border-goldline" id="11"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/index.js' %}"></script>
+{% endblock %}

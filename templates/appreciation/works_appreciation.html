@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <!-- 社区头部横幅 -->
+  <section class="text-white py-12 px-10" style="background-image: url('https://picsum.photos/id/36/1920/600'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-serif font-bold mb-4">陶瓷艺术社区</h1>
+        <p class="text-lg max-w-2xl">分享你的陶瓷作品，交流创作心得，发现匠心之作</p>
+        <div class="mt-8">
+            <button class="bg-goldline text-white py-3 px-6 rounded-full font-bold hover:bg-opacity-90 transition flex items-center gap-2">
+                <iconify-icon icon="mdi:plus-circle"></iconify-icon>
+                发布作品
+            </button>
+        </div>
+    </div>
+</section>
+
+  <!-- 社区导航与筛选 -->
+  <section class="bg-white shadow-sm py-4 px-10">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex flex-wrap gap-2">
+        <button class="px-4 py-2 rounded-full bg-bluewhite text-white text-sm">全部作品</button>
+        <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">青花瓷</button>
+        <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">釉里红</button>
+        <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">粉彩瓷</button>
+        <button class="px-4 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">陶艺雕塑</button>
+      </div>
+      <div class="flex items-center gap-4">
+        <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+          <option>最新发布</option>
+          <option>热门作品</option>
+          <option>最多收藏</option>
+        </select>
+        <div class="relative">
+          <input type="text" placeholder="搜索作品或创作者..." class="border border-gray-300 rounded-full pl-10 pr-4 py-2 text-sm w-64">
+          <iconify-icon icon="mdi:magnify" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></iconify-icon>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 社区主内容区 -->
+  <section class="py-10 px-10">
+    <div class="max-w-6xl mx-auto grid grid-cols-12 gap-8">
+      <!-- 作品流 (主内容区) -->
+      <div class="col-span-8">
+        <!-- 作品卡片 1 - 用户分享 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 transform transition hover:shadow-lg">
+          <!-- 作者信息 -->
+          <div class="p-6">
+            <div class="flex items-center gap-4">
+              <img src="https://picsum.photos/id/64/200/200" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <h3 class="font-semibold text-gray-800">林风陶艺工作室</h3>
+                <p class="text-sm text-gray-500">2小时前发布</p>
+              </div>
+              <button class="ml-auto text-gray-400 hover:text-bluewhite">
+                <iconify-icon icon="mdi:dots-vertical"></iconify-icon>
+              </button>
+            </div>
+            
+            <!-- 作品描述 -->
+            <p class="mt-4 text-gray-700">
+              新完成的青花山水纹茶杯，尝试了传统分水技法，釉色温润如玉，欢迎各位老师指点。
+            </p>
+          </div>
+          
+          <!-- 作品图片 -->
+          <div class="grid grid-cols-2 gap-1">
+            <img src="https://picsum.photos/id/28/800/800" alt="陶瓷作品" class="w-full h-64 object-cover">
+            <img src="https://picsum.photos/id/29/800/800" alt="陶瓷作品细节" class="w-full h-64 object-cover">
+          </div>
+          
+          <!-- 互动区 -->
+          <div class="p-6">
+            <div class="flex items-center gap-6 mb-4">
+              <button class="flex items-center gap-2 text-gray-600 hover:text-goldline transition">
+                <iconify-icon icon="mdi:heart"></iconify-icon>
+                <span>42 喜欢</span>
+              </button>
+              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+                <iconify-icon icon="mdi:comment"></iconify-icon>
+                <span>18 评论</span>
+              </button>
+              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+                <iconify-icon icon="mdi:share-variant"></iconify-icon>
+                <span>分享</span>
+              </button>
+            </div>
+            
+            <!-- 购买入口 -->
+            <div class="border-t border-gray-100 pt-4 flex items-center justify-between">
+              <div class="text-goldline font-semibold">¥268.00</div>
+              <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
+                联系购买
+              </button>
+            </div>
+          </div>
+          
+          <!-- 评论预览 -->
+          <div class="px-6 pb-6 pt-0">
+            <div class="flex items-start gap-3 mb-3">
+              <img src="https://picsum.photos/id/65/200/200" alt="评论者头像" class="w-8 h-8 rounded-full object-cover mt-1">
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <h4 class="font-medium text-gray-800 text-sm">青花瓷匠人</h4>
+                <p class="text-gray-600 text-sm mt-1">分水技法很到位，层次感很强，请问用的是什么钴料？</p>
+              </div>
+            </div>
+            <button class="text-bluewhite text-sm hover:underline">查看全部18条评论</button>
+          </div>
+        </div>
+        
+        <!-- 作品卡片 2 - 大师作品 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 transform transition hover:shadow-lg">
+          <!-- 作者信息 -->
+          <div class="p-6">
+            <div class="flex items-center gap-4">
+              <img src="https://picsum.photos/id/91/200/200" alt="大师头像" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-gray-800">王怀俊大师</h3>
+                  <span class="bg-goldline/10 text-goldline text-xs px-2 py-0.5 rounded-full">认证大师</span>
+                </div>
+                <p class="text-sm text-gray-500">昨天 15:30 发布</p>
+              </div>
+              <button class="ml-auto text-gray-400 hover:text-bluewhite">
+                <iconify-icon icon="mdi:dots-vertical"></iconify-icon>
+              </button>
+            </div>
+            
+            <!-- 作品描述 -->
+            <p class="mt-4 text-gray-700">
+              最新创作的《山居图》青花瓶，耗时三个月完成，采用传统柴窑烧制，限量3件，其中一件将在下周的艺术展展出。
+            </p>
+          </div>
+          
+          <!-- 作品图片 -->
+          <img src="https://picsum.photos/id/36/1200/800" alt="大师陶瓷作品" class="w-full h-96 object-cover">
+          
+          <!-- 互动区 -->
+          <div class="p-6">
+            <div class="flex items-center gap-6 mb-4">
+              <button class="flex items-center gap-2 text-gray-600 hover:text-goldline transition">
+                <iconify-icon icon="mdi:heart"></iconify-icon>
+                <span>256 喜欢</span>
+              </button>
+              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+                <iconify-icon icon="mdi:comment"></iconify-icon>
+                <span>78 评论</span>
+              </button>
+              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+                <iconify-icon icon="mdi:share-variant"></iconify-icon>
+                <span>分享</span>
+              </button>
+            </div>
+            
+            <!-- 购买入口 -->
+            <div class="border-t border-gray-100 pt-4 flex items-center justify-between">
+              <div class="text-goldline font-semibold">¥12,800.00</div>
+              <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
+                立即购买
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 侧边栏 -->
+      <div class="col-span-4">
+        <!-- 社区公告 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+          <h3 class="font-bold text-lg text-gray-800 mb-4 flex items-center gap-2">
+            <iconify-icon icon="mdi:bullhorn" class="text-goldline"></iconify-icon>
+            社区公告
+          </h3>
+          <div class="space-y-4">
+            <div class="border-l-4 border-goldline pl-3">
+              <p class="font-medium text-gray-800 text-sm">2023景德镇陶瓷艺术展征集中</p>
+              <p class="text-gray-500 text-xs mt-1">截止日期：2023-12-31</p>
+            </div>
+            <div class="border-l-4 border-gray-200 pl-3">
+              <p class="font-medium text-gray-800 text-sm">社区创作大赛获奖名单公布</p>
+              <p class="text-gray-500 text-xs mt-1">发布于：2023-11-15</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 热门创作者 -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+          <h3 class="font-bold text-lg text-gray-800 mb-4">热门创作者</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <img src="https://picsum.photos/id/64/200/200" alt="创作者头像" class="w-10 h-10 rounded-full object-cover">
+                <div>
+                  <p class="font-medium text-gray-800 text-sm">林风陶艺工作室</p>
+                  <p class="text-gray-500 text-xs">作品 42 · 粉丝 1.2k</p>
+                </div>
+              </div>
+              <button class="text-bluewhite text-sm border border-bluewhite px-3 py-1 rounded-full hover:bg-bluewhite hover:text-white transition">
+                关注
+              </button>
+            </div>
+            <!-- 更多创作者... -->
+          </div>
+          <button class="w-full mt-4 text-center text-bluewhite text-sm hover:underline">
+            查看更多
+          </button>
+        </div>
+        
+        <!-- 话题标签 -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3 class="font-bold text-lg text-gray-800 mb-4">热门话题</h3>
+          <div class="flex flex-wrap gap-2">
+            <a href="#" class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-bluewhite hover:text-white transition">#青花瓷创作</a>
+            <a href="#" class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-bluewhite hover:text-white transition">#传统釉料配方</a>
+            <a href="#" class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-bluewhite hover:text-white transition">#柴窑烧制技艺</a>
+            <a href="#" class="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full hover:bg-bluewhite hover:text-white transition">#陶瓷修复</a>
+            <!-- 更多话题... -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

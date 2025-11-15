@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}景德镇陶瓷艺术平台{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            porcelain: '#F8F5F2',
+            bluewhite: '#2A5CAA',
+            goldline: '#D4AF37',
+            celadon: '#27A69A'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  {% block extra_css %}
+  {% endblock %}
+</head>
+
+<body class="bg-gray-100 font-sans antialiased">
+  <!-- 整体容器 -->
+  <div class="w-full bg-porcelain shadow-lg">
+    <!-- 导航区 -->
+    <header class="h-20 bg-bluewhite flex items-center px-10 relative">
+      <div class="w-full flex items-center justify-between">
+        <!-- Logo - 保持在左侧 -->
+        <div class="flex items-center">
+          <iconify-icon class="text-3xl text-goldline" icon="ph:vase-fill"></iconify-icon>
+          <span class="ml-2 text-2xl font-serif font-bold text-white">景德窑韵</span>
+        </div>
+        
+        <!-- 主导航 - 绝对居中显示 -->
+        <nav class="flex space-x-4 absolute left-1/2 transform -translate-x-1/2">
+          <a class="nav-link text-white hover:text-goldline" href="{% url 'index' %}">首页</a>
+          <a class="nav-link text-white hover:text-goldline" href="{% url 'appreciation' %}">作品欣赏</a>
+          <a class="nav-link text-white hover:text-goldline" href="{% url 'master' %}">大师专栏</a>
+          <a class="nav-link text-white hover:text-goldline" href="#">关于我们</a>
+        </nav>
+        
+        <!-- 用户功能 -->
+        <div class="flex space-x-6 items-center">
+          <div class="relative">
+            <input class="py-2 px-4 rounded-full bg-white bg-opacity-20 text-white placeholder-white focus:outline-none focus:ring-1 focus:ring-white w-80" placeholder="搜索陶瓷作品..." type="text">
+            <iconify-icon class="text-xl text-white absolute right-3 top-2.5" icon="mdi:magnify"></iconify-icon>
+          </div>
+          <a class="bg-white text-bluewhite py-1.5 px-4 rounded-full font-medium hover:bg-opacity-90 transition" href="{% url 'user_login' %}">登录</a>
+        </div>
+      </div>
+    </header>
+    
+    <!-- 主内容区 -->
+    <main>
+      {% block content %}
+      {% endblock %}
+    </main>
+    
+    <!-- 页脚 -->
+    <footer class="bg-bluewhite text-white py-12 px-10">
+      <div class="grid grid-cols-4 gap-8">
+        <div>
+          <h3 class="font-bold text-xl mb-4">景德窑韵</h3>
+          <p class="opacity-80 leading-relaxed">
+            传承景德镇千年制瓷技艺，展示当代陶瓷艺术精品，
+            搭建陶瓷艺术与收藏的桥梁。
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">快速导航</h4>
+          <ul class="space-y-2">
+            <li><a class="opacity-80 hover:opacity-100" href="#">最新作品</a></li>
+            <li><a class="opacity-80 hover:opacity-100" href="#">大师专栏</a></li>
+            <li><a class="opacity-80 hover:opacity-100" href="#">陶瓷工艺</a></li>
+            <li><a class="opacity-80 hover:opacity-100" href="#">文化传承</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">联系我们</h4>
+          <address class="opacity-80 not-italic">
+            <p>江西省景德镇市珠山区</p>
+            <p class="my-2">电话：0798-XXXXXXX</p>
+            <p>邮箱：contact@jingdezhen.com</p>
+          </address>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">关注我们</h4>
+          <div class="flex space-x-4">
+            <a class="w-10 h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center" href="#">
+              <iconify-icon class="text-xl" icon="mdi:wechat"></iconify-icon>
+            </a>
+            <a class="w-10 h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center" href="#">
+              <iconify-icon class="text-xl" icon="mdi:weibo"></iconify-icon>
+            </a>
+            <a class="w-10 h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center" href="#">
+              <iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon>
+            </a>
+            <a class="w-10 h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center" href="#">
+              <iconify-icon class="text-xl" icon="mdi:youtube"></iconify-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white border-opacity-20 mt-10 pt-6 text-center text-sm opacity-70">
+        © 2025 景德镇陶瓷艺术平台 保留所有权利 | 赣ICP备XXXXXXXX号
+      </div>
+    </footer>
+  </div>
+
+
+  
+  {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,343 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}大师专栏 - 景德窑韵{% endblock %}
+
+{% block content %}
+  <!-- 大师专栏头部横幅 -->
+  <section class="relative h-[400px] overflow-hidden">
+    <img src="https://picsum.photos/id/175/1600/800" alt="景德镇陶瓷大师" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-r from-bluewhite/80 to-bluewhite/40"></div>
+    <div class="relative h-full flex items-center px-10 max-w-6xl mx-auto">
+      <div class="text-white">
+        <h1 class="text-5xl font-serif font-bold mb-4">陶瓷艺术大师专栏</h1>
+        <p class="text-xl max-w-2xl mb-8 opacity-90">传承千年技艺，领略当代陶瓷艺术巅峰之作</p>
+        <div class="flex gap-4">
+          <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-90 transition">
+            全部大师
+          </button>
+          <button class="bg-white bg-opacity-20 backdrop-blur-sm text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-30 transition">
+            非遗传承人
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 大师分类筛选 -->
+  <section class="bg-porcelain py-6 px-10 sticky top-20 z-10 shadow-sm">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-wrap items-center gap-4">
+        <span class="text-gray-700 font-medium">按领域筛选：</span>
+        <button class="px-5 py-2 rounded-full bg-bluewhite text-white text-sm">全部领域</button>
+        <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">青花瓷</button>
+        <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">粉彩瓷</button>
+        <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">颜色釉</button>
+        <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">雕塑瓷</button>
+        <button class="px-5 py-2 rounded-full bg-gray-100 text-gray-700 text-sm hover:bg-gray-200 transition">古瓷修复</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 大师列表 -->
+  <section class="py-16 px-10">
+    <div class="max-w-6xl mx-auto">
+      <!-- 国家级大师 -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-serif font-bold text-gray-800 mb-8 flex items-center">
+          <span class="w-1 h-6 bg-goldline mr-3"></span>
+          国家级工艺美术大师
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 大师卡片1 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div class="relative h-64">
+              <img src="https://picsum.photos/id/91/800/600" alt="王怀俊大师" class="w-full h-full object-cover">
+              <div class="absolute top-4 left-4 bg-goldline text-white text-sm px-3 py-1 rounded-full">
+                国家级大师
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">王怀俊</h3>
+                  <p class="text-gray-500 mt-1">青花瓷领域 · 从业50年</p>
+                </div>
+                <span class="bg-bluewhite/10 text-bluewhite text-xs px-2 py-1 rounded">非遗传承人</span>
+              </div>
+              
+              <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                中国工艺美术大师，擅长青花瓷创作，作品融合传统与现代元素，多次作为国礼赠送外国元首，被誉为"当代青花第一人"。
+              </p>
+              
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                  <div class="text-center">
+                    <div class="font-bold text-goldline">42</div>
+                    <div class="text-xs text-gray-500">代表作品</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="font-bold text-goldline">8</div>
+                    <div class="text-xs text-gray-500">国际奖项</div>
+                  </div>
+                </div>
+                <button class="text-bluewhite font-medium hover:underline">
+                  查看详情 <iconify-icon icon="mdi:arrow-right" class="inline-block ml-1"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 大师卡片2 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div class="relative h-64">
+              <img src="https://picsum.photos/id/64/800/600" alt="张松茂大师" class="w-full h-full object-cover">
+              <div class="absolute top-4 left-4 bg-goldline text-white text-sm px-3 py-1 rounded-full">
+                国家级大师
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">张松茂</h3>
+                  <p class="text-gray-500 mt-1">粉彩瓷领域 · 从业60年</p>
+                </div>
+                <span class="bg-bluewhite/10 text-bluewhite text-xs px-2 py-1 rounded">终身成就奖</span>
+              </div>
+              
+              <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                中国工艺美术大师，粉彩瓷领军人物，其作品《紫归牡怀图》被称为"当代瓷王"，开创了现代粉彩瓷的新境界。
+              </p>
+              
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                  <div class="text-center">
+                    <div class="font-bold text-goldline">56</div>
+                    <div class="text-xs text-gray-500">代表作品</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="font-bold text-goldline">12</div>
+                    <div class="text-xs text-gray-500">国际奖项</div>
+                  </div>
+                </div>
+                <button class="text-bluewhite font-medium hover:underline">
+                  查看详情 <iconify-icon icon="mdi:arrow-right" class="inline-block ml-1"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 省级大师 -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-serif font-bold text-gray-800 mb-8 flex items-center">
+          <span class="w-1 h-6 bg-bluewhite mr-3"></span>
+          省级工艺美术大师
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 大师卡片3 -->
+          <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 duration-300">
+            <div class="relative h-64">
+              <img src="https://picsum.photos/id/65/800/600" alt="李文跃大师" class="w-full h-full object-cover">
+              <div class="absolute top-4 left-4 bg-bluewhite text-white text-sm px-3 py-1 rounded-full">
+                省级大师
+              </div>
+            </div>
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-xl font-bold text-gray-800">李文跃</h3>
+                  <p class="text-gray-500 mt-1">颜色釉领域 · 从业40年</p>
+                </div>
+                <span class="bg-bluewhite/10 text-bluewhite text-xs px-2 py-1 rounded">创新先锋</span>
+              </div>
+              
+              <p class="text-gray-600 text-sm mb-5 line-clamp-3">
+                江西省工艺美术大师，专注颜色釉研究与创作，恢复多项失传釉料配方，作品色彩瑰丽多变，被誉为"釉色魔术师"。
+              </p>
+              
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                  <div class="text-center">
+                    <div class="font-bold text-goldline">38</div>
+                    <div class="text-xs text-gray-500">代表作品</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="font-bold text-goldline">6</div>
+                    <div class="text-xs text-gray-500">省级奖项</div>
+                  </div>
+                </div>
+                <button class="text-bluewhite font-medium hover:underline">
+                  查看详情 <iconify-icon icon="mdi:arrow-right" class="inline-block ml-1"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 大师工作室探访 -->
+      <div class="bg-gradient-to-r from-bluewhite/5 to-porcelain rounded-2xl p-8 border border-bluewhite/10 mb-16">
+        <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6">大师工作室探访</h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div class="relative rounded-xl overflow-hidden h-80">
+            <img src="https://picsum.photos/id/28/1000/800" alt="大师工作室" class="w-full h-full object-cover">
+            <button class="absolute inset-0 m-auto w-16 h-16 rounded-full bg-white bg-opacity-80 flex items-center justify-center text-bluewhite hover:bg-goldline hover:text-white transition">
+              <iconify-icon icon="mdi:play" class="text-2xl"></iconify-icon>
+            </button>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">走进王怀俊青花工作室</h3>
+            <p class="text-gray-600 mb-6 leading-relaxed">
+              探访景德镇最具影响力的青花工作室，见证一件青花瓷从拉坯、利坯、画坯到施釉、烧制的全过程。王怀俊大师将亲自演示青花分水技法，解读传统工艺的精髓所在。
+            </p>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="flex items-start">
+                <iconify-icon icon="mdi:calendar" class="text-goldline mt-1 mr-3"></iconify-icon>
+                <div>
+                  <div class="font-medium text-gray-800">每周三、六</div>
+                  <div class="text-sm text-gray-500">上午 9:00-11:30</div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <iconify-icon icon="mdi:map-marker" class="text-goldline mt-1 mr-3"></iconify-icon>
+                <div>
+                  <div class="font-medium text-gray-800">老厂陶艺区</div>
+                  <div class="text-sm text-gray-500">景德镇珠山区</div>
+                </div>
+              </div>
+            </div>
+            <button class="bg-bluewhite text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-90 transition">
+              预约参观
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 新增：大师定制部分 -->
+      <div class="mb-16 bg-white rounded-2xl shadow-md overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-5">
+          <!-- 左侧图片区 -->
+          <div class="lg:col-span-2 relative h-80 lg:h-auto">
+            <img src="https://picsum.photos/id/36/800/1000" alt="大师定制作品" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent lg:hidden"></div>
+          </div>
+          
+          <!-- 右侧内容区 -->
+          <div class="lg:col-span-3 p-8 lg:p-10 flex flex-col justify-center">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-goldline mr-3"></span>
+              大师定制服务
+            </h2>
+            
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              专属定制独一无二的陶瓷艺术珍品，由景德镇顶级大师亲自设计创作，融合个人理念与传统工艺，无论是收藏传世、企业礼赠还是文化传承，都将成为不可复制的文化符号。
+            </p>
+            
+            <!-- 定制类型 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+              <div class="flex items-start p-4 bg-porcelain rounded-lg">
+                <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0">
+                  <iconify-icon icon="mdi:gift"></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-800 mb-1">收藏级定制</h3>
+                  <p class="text-sm text-gray-600">根据藏家需求，创作具有个人印记的艺术珍品</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start p-4 bg-porcelain rounded-lg">
+                <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0">
+                  <iconify-icon icon="mdi:briefcase"></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-800 mb-1">企业定制</h3>
+                  <p class="text-sm text-gray-600">融合企业理念的高端礼品与文化展示品</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start p-4 bg-porcelain rounded-lg">
+                <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0">
+                  <iconify-icon icon="mdi:family-tree"></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-800 mb-1">家族传承定制</h3>
+                  <p class="text-sm text-gray-600">承载家族故事与精神的传世之作</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start p-4 bg-porcelain rounded-lg">
+                <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0">
+                  <iconify-icon icon="mdi:palette"></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-bold text-gray-800 mb-1">艺术联名创作</h3>
+                  <p class="text-sm text-gray-600">与艺术家跨界合作的创新作品</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 定制流程与按钮 -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div class="text-gray-600 text-sm">
+                <div class="flex items-center mb-2">
+                  <span class="w-6 h-6 rounded-full bg-bluewhite text-white text-xs flex items-center justify-center mr-2">1</span>
+                  <span>需求沟通 → 设计方案 → 创作制作 → 成品交付</span>
+                </div>
+                <p>定制周期：30-90天（根据工艺复杂度）</p>
+              </div>
+              
+              <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-90 transition self-start">
+                咨询定制详情
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 大师作品展览信息 -->
+      <section class="py-16 bg-gray-50 rounded-2xl">
+        <div class="max-w-5xl mx-auto px-10">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">近期大师作品展</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">近距离欣赏大师原作，感受陶瓷艺术的独特魅力</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="h-56">
+                <img src="https://picsum.photos/id/29/800/600" alt="青花艺术展" class="w-full h-full object-cover">
+              </div>
+              <div class="p-6">
+                <div class="flex justify-between items-center mb-3">
+                  <h3 class="text-xl font-bold text-gray-800">当代青花艺术特展</h3>
+                  <span class="bg-goldline/10 text-goldline text-xs px-2 py-1 rounded">进行中</span>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">
+                  汇集12位青花大师的50件代表作，展现青花瓷的传承与创新
+                </p>
+                <div class="flex items-center text-gray-500 text-sm mb-5">
+                  <div class="flex items-center mr-6">
+                    <iconify-icon icon="mdi:calendar" class="mr-2"></iconify-icon>
+                    2023.10.1 - 11.30
+                  </div>
+                  <div class="flex items-center">
+                    <iconify-icon icon="mdi:map-marker" class="mr-2"></iconify-icon>
+                    景德镇陶瓷馆
+                  </div>
+                </div>
+                <button class="w-full bg-porcelain text-bluewhite py-2.5 rounded-lg font-medium hover:bg-bluewhite hover:text-white transition">
+                  了解详情
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+{% endblock %}

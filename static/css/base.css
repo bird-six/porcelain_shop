@@ -1,0 +1,383 @@
+/* 动画效果 */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* 滚动捕捉 */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.scroll-item {
+  scroll-snap-align: start;
+}
+
+/* Bento网格布局 */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 240px;
+  grid-gap: 24px;
+  grid-template-areas:
+    "a a b"
+    "a a c"
+    "d e f";
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bento-item:nth-child(1) {
+  grid-area: a;
+}
+
+.bento-item:nth-child(2) {
+  grid-area: b;
+}
+
+.bento-item:nth-child(3) {
+  grid-area: c;
+}
+
+.bento-item:nth-child(4) {
+  grid-area: d;
+}
+
+.bento-item:nth-child(5) {
+  grid-area: e;
+}
+
+.bento-item:nth-child(6) {
+  grid-area: f;
+}
+
+/* 产品卡片样式 */
+.product-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-overlay {
+  opacity: 0.85;
+}
+
+.product-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px;
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.product-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.product-price {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  margin-top: 4px;
+  max-height: 2.8em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.product-rating {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #2A5CAA;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #27A69A;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* 产品操作按钮样式 */
+.product-actions {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 青花瓷系列按钮特殊样式 */
+.bento-item:first-child .product-card .product-actions {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  top: auto !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 0 24px 24px !important;
+  transition: bottom 0.3s ease !important;
+  opacity: 0 !important;
+}
+
+.bento-item:first-child .product-card:hover .product-actions {
+  bottom: 0 !important;
+  opacity: 1 !important;
+}
+
+.product-card:hover .product-actions {
+  opacity: 1;
+}
+
+.action-btn {
+  background-color: white;
+  color: #2A5CAA;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn:hover {
+  background-color: #D4AF37;
+  color: white;
+  transform: translateY(-4px);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "a a"
+      "b c"
+      "d e";
+    grid-auto-rows: 200px;
+  }
+  
+  .bento-item:nth-child(6) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "a"
+      "b"
+      "c";
+    grid-auto-rows: 250px;
+  }
+  
+  .bento-item:nth-child(4),
+  .bento-item:nth-child(5),
+  .bento-item:nth-child(6) {
+    display: none;
+  }
+  
+  .product-name {
+    font-size: 1.25rem;
+  }
+  
+  .product-price {
+    font-size: 1.1rem;
+  }
+}
+
+/* 导航链接样式 */
+.nav-link {
+  position: relative;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #D4AF37;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 80%;
+}
+
+/* 轮播样式 */
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-item.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* 确保文字内容在图片之上 */
+.carousel-item > div {
+  position: relative;
+  z-index: 1;
+}
+
+/* 指示器样式 */
+.carousel-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  margin: 0 6px;
+}
+
+.carousel-indicator.active {
+  background-color: #D4AF37;
+  border-color: #D4AF37;
+  transform: scale(1.4);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+.carousel-indicator:hover {
+  background-color: rgba(212, 175, 55, 0.8);
+  transform: scale(1.3);
+}
+
+/* 确保指示器始终可见 */
+#carousel-indicators {
+  z-index: 20;
+  pointer-events: auto;
+}
+
+/* 轮播导航按钮样式 */
+#prev-btn,
+#next-btn {
+  z-index: 20;
+  pointer-events: auto;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 当鼠标悬停在carousel-container上时显示按钮 */
+#carousel-container:hover #prev-btn,
+#carousel-container:hover #next-btn {
+  opacity: 1;
+}
+
+/* 按钮自身悬停效果 */
+#prev-btn:hover,
+#next-btn:hover {
+  background: rgba(212, 175, 55, 0.9);
+  border-color: #D4AF37;
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
