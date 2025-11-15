@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'porcelain_shop',  # 数据库名
         'USER': 'root',  # 用户名
-        'PASSWORD': 'yang123.',  # 密码
+        'PASSWORD': '123456',  # 密码
         'HOST': 'localhost',  # 数据库主机
         'PORT': '3306',  # 数据库端口
         'OPTIONS': {
