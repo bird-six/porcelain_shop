@@ -70,3 +70,6 @@ def user_login(request):
             return render(request, 'user/register_login.html', {'error': '用户名或密码错误'})
     else:
         return render(request, 'user/register_login.html')
+
+def test(request):
+    pass
