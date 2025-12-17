@@ -29,7 +29,7 @@ has_module_perms(app_label)	检查用户是否拥有指定应用的所有权限�
 class User(AbstractUser):
     name = models.CharField(max_length=8, verbose_name='平台用户名')
 
-    class Meta:
-        # 自定义模型在 admin 中的显示名称（可选）
-        verbose_name = '用户'
-        verbose_name_plural = '用户'
+    # class Meta:
+    #     # admin 中的显示名称（可选）
+    #     verbose_name = '用户'
+    #     verbose_name_plural = '用户'

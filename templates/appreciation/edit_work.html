@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+  <!-- 页面标题 -->
+  <section class="text-white py-12 px-10" style="background-image: url('https://picsum.photos/id/36/1920/600'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-4xl font-serif font-bold mb-4">发布作品</h1>
+        <p class="text-lg max-w-2xl">分享你的陶瓷艺术作品，与社区爱好者交流</p>
+    </div>
+</section>
+
+  <!-- 编辑表单主体 -->
+  <section class="py-10 px-10 bg-gray-50">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+        <!-- 表单主体 -->
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <!-- 作品标题 -->
+          <div class="mb-6">
+            <label for="work-title" class="block text-gray-700 font-medium mb-2">作品标题</label>
+            <input type="text" id="work-title" name="title" placeholder="请输入作品标题" 
+                   class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+          </div>
+          
+          <!-- 作品分类 -->
+          <div class="mb-6">
+            <label for="work-category" class="block text-gray-700 font-medium mb-2">作品分类</label>
+            <select id="work-category" name="category" 
+                    class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+              <option value="">请选择分类</option>
+              <option value="blue-white">青花瓷</option>
+              <option value="underglaze-red">釉里红</option>
+              <option value="famille-rose">粉彩瓷</option>
+              <option value="sculpture">陶艺雕塑</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+          
+          <!-- 作品描述 -->
+          <div class="mb-6">
+            <label for="work-description" class="block text-gray-700 font-medium mb-2">作品描述</label>
+            <textarea id="work-description" name="description" rows="6" placeholder="请详细描述你的作品创作灵感、工艺特点等..." 
+                      class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition"></textarea>
+          </div>
+          
+          <!-- 作品图片上传 -->
+            <div class="mb-6">
+              <label class="block text-gray-700 font-medium mb-2">作品图片 <span class="text-sm text-gray-500">(至少上传1张，最多9张)</span></label>
+              
+              <!-- 图片预览容器 -->
+              <div class="grid grid-cols-3 gap-4 mb-4" id="image-container">
+                <!-- 初始上传区域 -->
+                <div class="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center p-2 hover:border-bluewhite transition cursor-pointer relative group upload-area">
+                  <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp" multiple name="images">
+                  <div class="flex flex-col items-center justify-center text-center">
+                    <iconify-icon icon="mdi:camera-plus" class="w-10 h-10 text-gray-400 group-hover:text-bluewhite transition"></iconify-icon>
+                    <span class="mt-2 text-sm text-gray-500">点击添加图片</span>
+                  </div>
+                </div>
+              </div>
+              
+              <p class="mt-2 text-xs text-gray-500">推荐图片尺寸：1080x1080px，单张不超过5MB，支持格式：JPG、PNG、GIF、WebP</p>
+            </div>
+          
+          <!-- 作品参数 -->
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">作品参数</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="work-material" class="block text-gray-700 font-medium mb-2">材质</label>
+                <input type="text" id="work-material" name="material" placeholder="如：高岭土" 
+                       class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+              </div>
+              <div>
+                <label for="work-technique" class="block text-gray-700 font-medium mb-2">工艺</label>
+                <input type="text" id="work-technique" name="technique" placeholder="如：釉里红" 
+                       class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+              </div>
+              <div>
+                <label for="work-specs" class="block text-gray-700 font-medium mb-2">规格</label>
+                <input type="text" id="work-specs" name="specification" placeholder="如：6件套" 
+                       class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+              </div>
+              <div>
+                <label for="work-origin" class="block text-gray-700 font-medium mb-2">产地</label>
+                <input type="text" id="work-origin" name="origin" placeholder="如：景德镇" 
+                       class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+              </div>
+            </div>
+          </div>
+          
+          <!-- 价格设置 -->
+          <div class="mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">价格设置</h3>
+            <div class="flex items-center space-x-4">
+              <label class="inline-flex items-center">
+                <input type="radio" name="price_type" value="free" class="form-radio text-bluewhite">
+                <span class="ml-2">仅供展示（不销售）</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input type="radio" name="price_type" value="for_sale" class="form-radio text-bluewhite">
+                <span class="ml-2">可销售</span>
+              </label>
+            </div>
+            <div id="price-input-container" class="mt-4">
+              <label for="work-price" class="block text-gray-700 font-medium mb-2">价格</label>
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">¥</span>
+                <input type="number" id="work-price" name="price" placeholder="0.00" min="0" step="0.01" 
+                       class="form-input w-full pl-8 pr-4 py-3 rounded-lg border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+              </div>
+            </div>
+          </div>
+          
+          <!-- 作品标签 -->
+          <div class="mb-6">
+            <label class="block text-gray-700 font-medium mb-2">作品标签</label>
+            <div class="flex flex-wrap gap-2 mb-3" id="selected-tags">
+              <!-- 已选标签会显示在这里 -->
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-bluewhite hover:text-white transition tag-btn">
+                #青花瓷创作
+              </button>
+              <button type="button" class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-bluewhite hover:text-white transition tag-btn">
+                #传统釉料配方
+              </button>
+              <button type="button" class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-bluewhite hover:text-white transition tag-btn">
+                #柴窑烧制技艺
+              </button>
+              <button type="button" class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-bluewhite hover:text-white transition tag-btn">
+                #陶瓷修复
+              </button>
+              <div class="relative">
+                <input type="text" id="custom-tag" placeholder="自定义标签" 
+                       class="form-input w-40 px-4 py-1 text-sm rounded-full border border-gray-300 focus:border-bluewhite focus:ring-2 focus:ring-bluewhite/20 transition">
+                <button type="button" id="add-custom-tag" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-bluewhite">
+                  <iconify-icon icon="mdi:plus"></iconify-icon>
+                </button>
+              </div>
+            </div>
+            <input type="hidden" id="tags-input" name="tags" value="">
+          </div>
+          
+          <!-- 提交按钮 -->
+          <div class="flex justify-end space-x-4 pt-6 border-t border-gray-100">
+            <button type="button" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
+              保存草稿
+            </button>
+            <button type="submit" class="px-6 py-3 bg-bluewhite text-white font-medium rounded-lg hover:bg-bluewhite/90 transition">
+              发布作品
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/edit_work.js' %}"></script>
+{% endblock %}

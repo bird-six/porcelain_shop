@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.views.generic import FormView
 
 from apps.user.models import User
@@ -71,5 +71,25 @@ def user_login(request):
     else:
         return render(request, 'user/register_login.html')
 
-def test(request):
-    pass
+def user_logout(request):
+    """用户退出登录视图"""
+    # 处理GET请求
+    if request.method == 'GET':
+        # 退出登录
+        logout(request)
+        # 重定向到首页
+        return redirect('index')
+    else:
+        # 其他请求不合法
+        return JsonResponse({'error': '请求方法不合法'}, status=400)
+
+
+def profile(request):
+    """用户个人信息视图"""
+    # 检查用户是否登录
+    if request.user.is_authenticated:
+        # 用户已登录，显示个人信息
+        return render(request, 'user/profile.html', {'user': request.user})
+    else:
+        # 用户未登录，重定向到登录页面
+        return redirect('user_login')

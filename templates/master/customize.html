@@ -1,0 +1,588 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}大师定制服务 - 景德窑韵{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<style>
+  .custom-step::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    right: -2rem;
+    height: 1px;
+    background-color: #D4AF37;
+    z-index: 0;
+  }
+  
+  .custom-step:last-child::before {
+    display: none;
+  }
+  
+  .custom-card {
+    transition: all 0.3s ease;
+  }
+  
+  .custom-card:hover {
+    transform: translateY(-8px);
+  }
+  
+  .material-swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .material-swatch:hover, .material-swatch.active {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px currentColor;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 页面头部 -->
+<section class="bg-bluewhite text-white py-12 px-10">
+  <div class="max-w-6xl mx-auto text-center">
+    <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">大师瓷器定制服务</h1>
+    <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-90">
+      由景德镇顶级工艺美术大师亲自创作，将您的理念与传统工艺完美融合，打造独一无二的陶瓷艺术珍品
+    </p>
+  </div>
+</section>
+
+<!-- 定制展示图 -->
+<section class="py-10 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <img src="https://picsum.photos/id/36/800/600" alt="定制瓷器展示" class="w-full h-80 object-cover rounded-xl shadow-md">
+      <img src="https://picsum.photos/id/42/800/600" alt="大师创作过程" class="w-full h-80 object-cover rounded-xl shadow-md">
+    </div>
+  </div>
+</section>
+
+<!-- 定制流程 -->
+<section class="py-16 px-10">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">定制流程</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">从理念到成品，我们提供全程专属服务，让每一件定制作品都成为传世之作</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+      <!-- 步骤1 -->
+      <div class="custom-step relative bg-white p-6 rounded-xl shadow-md text-center">
+        <div class="w-12 h-12 rounded-full bg-goldline text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">需求沟通</h3>
+        <p class="text-gray-600 text-sm">
+          与专属顾问深入交流，确定定制用途、风格、预算及特殊要求
+        </p>
+      </div>
+      
+      <!-- 步骤2 -->
+      <div class="custom-step relative bg-white p-6 rounded-xl shadow-md text-center">
+        <div class="w-12 h-12 rounded-full bg-goldline text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">设计方案</h3>
+        <p class="text-gray-600 text-sm">
+          大师团队根据需求创作设计稿，提供3-5套方案供选择与调整
+        </p>
+      </div>
+      
+      <!-- 步骤3 -->
+      <div class="custom-step relative bg-white p-6 rounded-xl shadow-md text-center">
+        <div class="w-12 h-12 rounded-full bg-goldline text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">创作制作</h3>
+        <p class="text-gray-600 text-sm">
+          选定方案后由大师亲自制作，定期提供进度报告与过程照片
+        </p>
+      </div>
+      
+      <!-- 步骤4 -->
+      <div class="bg-white p-6 rounded-xl shadow-md text-center">
+        <div class="w-12 h-12 rounded-full bg-goldline text-white flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">成品交付</h3>
+        <p class="text-gray-600 text-sm">
+          作品完成后提供高清照片确认，满意后专业包装配送并附收藏证书
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 定制类型 -->
+<section class="py-16 bg-porcelain">
+  <div class="max-w-6xl mx-auto px-10">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">定制类型</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">根据不同需求，我们提供多种定制服务，满足您的个性化需求</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- 收藏级定制 -->
+      <div class="custom-card bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="h-48 overflow-hidden">
+          <img src="https://picsum.photos/id/43/600/400" alt="收藏级定制" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-3">
+              <iconify-icon icon="mdi:treasure-chest"></iconify-icon>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">收藏级定制</h3>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">
+            由国家级大师亲自创作，融合传统技艺与个人艺术风格，具有极高的艺术价值和收藏潜力。
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-goldline font-bold">起价 ¥50,000</span>
+            <span class="text-xs text-gray-500">周期 60-90天</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 企业定制 -->
+      <div class="custom-card bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="h-48 overflow-hidden">
+          <img src="https://picsum.photos/id/45/600/400" alt="企业定制" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-3">
+              <iconify-icon icon="mdi:briefcase"></iconify-icon>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">企业定制</h3>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">
+            结合企业理念与文化元素，定制高端礼品、办公摆件或品牌展示品，彰显企业品位。
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-goldline font-bold">起价 ¥15,000</span>
+            <span class="text-xs text-gray-500">周期 30-60天</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 家族传承定制 -->
+      <div class="custom-card bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="h-48 overflow-hidden">
+          <img src="https://picsum.photos/id/26/600/400" alt="家族传承定制" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+        </div>
+        <div class="p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-3">
+              <iconify-icon icon="mdi:family-tree"></iconify-icon>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">家族传承定制</h3>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">
+            融入家族徽记、故事或精神象征，打造可世代相传的家族信物与文化载体。
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-goldline font-bold">起价 ¥30,000</span>
+            <span class="text-xs text-gray-500">周期 45-90天</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 定制选项 -->
+<section class="py-16 px-10">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">定制选项</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">丰富的定制选择，满足您对作品的个性化需求</p>
+    </div>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <!-- 左侧：定制参数选择 -->
+      <div class="space-y-8">
+        <!-- 瓷器类型 -->
+        <div>
+          <h3 class="text-xl font-bold text-gray-800 mb-4">瓷器类型</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <iconify-icon icon="mdi:coffee" class="text-2xl text-bluewhite mb-2"></iconify-icon>
+              <p class="text-sm">茶具套装</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <iconify-icon icon="mdi:cup" class="text-2xl text-bluewhite mb-2"></iconify-icon>
+              <p class="text-sm">花瓶摆件</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <iconify-icon icon="mdi:frame" class="text-2xl text-bluewhite mb-2"></iconify-icon>
+              <p class="text-sm">瓷板画</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <iconify-icon icon="mdi:box" class="text-2xl text-bluewhite mb-2"></iconify-icon>
+              <p class="text-sm">文房四宝</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <iconify-icon icon="mdi:gift" class="text-2xl text-bluewhite mb-2"></iconify-icon>
+              <p class="text-sm">礼品套装</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <iconify-icon icon="mdi:plus-circle" class="text-2xl text-bluewhite mb-2"></iconify-icon>
+              <p class="text-sm">其他定制</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 工艺选择 -->
+        <div>
+          <h3 class="text-xl font-bold text-gray-800 mb-4">工艺选择</h3>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <p class="text-sm font-medium mb-1">青花瓷</p>
+              <p class="text-xs text-gray-500">釉下彩工艺</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <p class="text-sm font-medium mb-1">釉里红</p>
+              <p class="text-xs text-gray-500">高温铜红釉</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <p class="text-sm font-medium mb-1">粉彩瓷</p>
+              <p class="text-xs text-gray-500">釉上彩绘</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <p class="text-sm font-medium mb-1">颜色釉</p>
+              <p class="text-xs text-gray-500">窑变效果</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <p class="text-sm font-medium mb-1">玲珑瓷</p>
+              <p class="text-xs text-gray-500">镂空透光</p>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-3 text-center hover:border-bluewhite cursor-pointer transition">
+              <p class="text-sm font-medium mb-1">综合工艺</p>
+              <p class="text-xs text-gray-500">多种技法</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 材质与釉色 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">材质选择</h3>
+            <div class="space-y-2">
+              <label class="flex items-center">
+                <input type="radio" name="material" class="form-radio text-bluewhite" checked>
+                <span class="ml-2 text-gray-700">特级高岭土</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="material" class="form-radio text-bluewhite">
+                <span class="ml-2 text-gray-700">高白泥</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="material" class="form-radio text-bluewhite">
+                <span class="ml-2 text-gray-700">汝窑胎土</span>
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="material" class="form-radio text-bluewhite">
+                <span class="ml-2 text-gray-700">定制配方</span>
+              </label>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">釉色选择</h3>
+            <div class="flex flex-wrap gap-3">
+              <div class="material-swatch bg-white border border-gray-300 active" title="白釉"></div>
+              <div class="material-swatch bg-blue-100 border border-blue-200" title="天青釉"></div>
+              <div class="material-swatch bg-green-100 border border-green-200" title="豆青釉"></div>
+              <div class="material-swatch bg-yellow-100 border border-yellow-200" title="黄釉"></div>
+              <div class="material-swatch bg-red-100 border border-red-200" title="红釉"></div>
+              <div class="material-swatch bg-gray-200 border border-gray-300" title="灰釉"></div>
+              <div class="material-swatch bg-purple-100 border border-purple-200" title="紫釉"></div>
+              <div class="material-swatch bg-gradient-to-r from-blue-100 to-green-100 border border-blue-200" title="窑变釉"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 右侧：定制需求表单 -->
+      <div class="bg-white p-8 rounded-xl shadow-md">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">提交定制需求</h3>
+        <form>
+          <div class="space-y-4 mb-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">您的姓名</label>
+              <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bluewhite focus:border-bluewhite" placeholder="请输入您的姓名">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">联系电话</label>
+              <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bluewhite focus:border-bluewhite" placeholder="请输入您的联系电话">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">定制类型</label>
+              <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bluewhite focus:border-bluewhite">
+                <option>收藏级定制</option>
+                <option>企业定制</option>
+                <option>家族传承定制</option>
+                <option>其他定制需求</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">预算范围</label>
+              <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bluewhite focus:border-bluewhite">
+                <option>1万元以下</option>
+                <option>1-5万元</option>
+                <option>5-10万元</option>
+                <option>10-30万元</option>
+                <option>30万元以上</option>
+              </select>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">定制需求描述</label>
+              <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bluewhite focus:border-bluewhite" placeholder="请详细描述您的定制想法、用途、偏好风格等信息"></textarea>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">上传参考图片（可选）</label>
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <iconify-icon icon="mdi:upload" class="text-3xl text-gray-400 mb-2"></iconify-icon>
+                <p class="text-sm text-gray-500 mb-3">点击或拖拽文件至此处上传</p>
+                <p class="text-xs text-gray-400">支持JPG、PNG格式，单文件不超过5MB</p>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit" class="w-full bg-goldline text-white py-3 px-6 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center justify-center gap-2">
+            提交定制需求
+            <iconify-icon icon="mdi:arrow-right"></iconify-icon>
+          </button>
+          
+          <p class="text-xs text-gray-500 text-center mt-4">
+            提交后，我们将在24小时内安排专属顾问与您联系
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 定制案例 -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-10">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">定制案例展示</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">精选过往定制作品，每一件都讲述着独特的故事</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- 案例1 -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden group">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://picsum.photos/id/48/600/400" alt="企业定制案例" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+            <div class="p-4 text-white">
+              <p class="text-sm">企业定制 · 王怀俊大师作品</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">某集团周年庆典定制瓷瓶</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            融合企业标志与传统青花技艺，瓶身采用"四季平安"主题图案，限量制作50件作为高端礼品。
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-gray-500">定制周期：45天</span>
+            <button class="text-bluewhite text-sm hover:underline">查看详情</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 案例2 -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden group">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://picsum.photos/id/22/600/400" alt="家族定制案例" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+            <div class="p-4 text-white">
+              <p class="text-sm">家族传承 · 李文跃大师作品</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">张氏家族纹章茶具套装</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            以家族纹章为设计核心，结合颜色釉工艺，打造专属家族茶具，传承家族文化记忆。
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-gray-500">定制周期：60天</span>
+            <button class="text-bluewhite text-sm hover:underline">查看详情</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 案例3 -->
+      <div class="bg-white rounded-xl shadow-md overflow-hidden group">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://picsum.photos/id/30/600/400" alt="收藏定制案例" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+            <div class="p-4 text-white">
+              <p class="text-sm">收藏定制 · 国家级大师合作</p>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">《山水清音》大型瓷板画</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            收藏家专属定制，三位大师联袂创作，融合青花、釉里红、颜色釉多种工艺，耗时90天完成。
+          </p>
+          <div class="flex justify-between items-center">
+            <span class="text-xs text-gray-500">定制周期：90天</span>
+            <button class="text-bluewhite text-sm hover:underline">查看详情</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-10">
+      <button class="border border-bluewhite text-bluewhite px-6 py-2 rounded-lg hover:bg-bluewhite hover:text-white transition">
+        查看更多案例
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- 定制大师团队 -->
+<section class="py-16 px-10">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">定制大师团队</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">参与定制服务的大师均为行业顶尖艺术家，拥有数十年创作经验</p>
+    </div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- 大师1 -->
+      <div class="text-center">
+        <div class="relative w-40 h-40 mx-auto mb-4">
+          <img src="https://picsum.photos/id/91/200/200" alt="王怀俊大师" class="w-full h-full object-cover rounded-full border-4 border-white shadow-md">
+          <div class="absolute -bottom-2 -right-2 bg-goldline text-white text-xs px-2 py-1 rounded">
+            国家级
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-1">王怀俊</h3>
+        <p class="text-bluewhite mb-2">青花瓷大师</p>
+        <p class="text-gray-600 text-sm">
+          擅长青花分水技法，作品多次作为国礼赠送外国元首
+        </p>
+      </div>
+      
+      <!-- 大师2 -->
+      <div class="text-center">
+        <div class="relative w-40 h-40 mx-auto mb-4">
+          <img src="https://picsum.photos/id/65/200/200" alt="李文跃大师" class="w-full h-full object-cover rounded-full border-4 border-white shadow-md">
+          <div class="absolute -bottom-2 -right-2 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+            省级
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-1">李文跃</h3>
+        <p class="text-bluewhite mb-2">颜色釉专家</p>
+        <p class="text-gray-600 text-sm">
+          恢复多项失传釉料配方，被誉为"釉色魔术师"
+        </p>
+      </div>
+      
+      <!-- 大师3 -->
+      <div class="text-center">
+        <div class="relative w-40 h-40 mx-auto mb-4">
+          <img src="https://picsum.photos/id/26/200/200" alt="陈思远大师" class="w-full h-full object-cover rounded-full border-4 border-white shadow-md">
+          <div class="absolute -bottom-2 -right-2 bg-goldline text-white text-xs px-2 py-1 rounded">
+            国家级
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-1">陈思远</h3>
+        <p class="text-bluewhite mb-2">粉彩艺术大师</p>
+        <p class="text-gray-600 text-sm">
+          当代粉彩瓷领军人物，作品色彩丰富层次分明
+        </p>
+      </div>
+      
+      <!-- 大师4 -->
+      <div class="text-center">
+        <div class="relative w-40 h-40 mx-auto mb-4">
+          <img src="https://picsum.photos/id/36/200/200" alt="赵大师" class="w-full h-full object-cover rounded-full border-4 border-white shadow-md">
+          <div class="absolute -bottom-2 -right-2 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+            省级
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-1">赵天明</h3>
+        <p class="text-bluewhite mb-2">综合工艺大师</p>
+        <p class="text-gray-600 text-sm">
+          擅长多种工艺融合创新，作品风格独特
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 常见问题 -->
+<section class="py-16 bg-porcelain">
+  <div class="max-w-4xl mx-auto px-10">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">常见问题</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">关于定制服务的常见疑问解答</p>
+    </div>
+    
+    <div class="space-y-6">
+      <!-- 问题1 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <button class="flex justify-between items-center w-full text-left focus:outline-none">
+          <h3 class="text-lg font-bold text-gray-800">定制作品是否提供收藏证书？</h3>
+          <iconify-icon icon="mdi:chevron-down text-gray-500"></iconify-icon>
+        </button>
+        <div class="mt-4 text-gray-600 text-sm">
+          所有大师定制作品均提供收藏证书，证书包含大师签名、作品信息、创作日期等内容，并附有防伪标识。对于特别重要的定制作品，可提供大师与作品的合影及创作过程纪录片。
+        </div>
+      </div>
+      
+      <!-- 问题2 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <button class="flex justify-between items-center w-full text-left focus:outline-none">
+          <h3 class="text-lg font-bold text-gray-800">定制过程中可以修改设计方案吗？</h3>
+          <iconify-icon icon="mdi:chevron-down text-gray-500"></iconify-icon>
+        </button>
+        <div class="mt-4 text-gray-600 text-sm">
+          在制作开始前，客户可以根据设计稿提出修改意见。一旦进入制作阶段，如涉及重大设计变更可能会影响工期和价格，需与大师团队协商确定。我们建议在设计方案确认阶段尽量完善需求。
+        </div>
+      </div>
+      
+      <!-- 问题3 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <button class="flex justify-between items-center w-full text-left focus:outline-none">
+          <h3 class="text-lg font-bold text-gray-800">如何确保定制作品的质量？</h3>
+          <iconify-icon icon="mdi:chevron-down text-gray-500"></iconify-icon>
+        </button>
+        <div class="mt-4 text-gray-600 text-sm">
+          所有定制作品均由大师亲自创作或全程指导，经过多道质量检验工序。我们承诺：如作品存在非不可抗力导致的质量问题，将免费修复或重新制作。重要作品可提供质量保险服务。
+        </div>
+      </div>
+      
+      <!-- 问题4 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <button class="flex justify-between items-center w-full text-left focus:outline-none">
+          <h3 class="text-lg font-bold text-gray-800">定制作品的付款方式是怎样的？</h3>
+          <iconify-icon icon="mdi:chevron-down text-gray-500"></iconify-icon>
+        </button>
+        <div class="mt-4 text-gray-600 text-sm">
+          定制服务需预付50%定金确认订单，设计方案确定后再支付30%进度款，作品完成并经客户确认后支付剩余20%尾款。支持银行转账、支付宝、微信支付等多种付款方式，大额定制可协商分期付款。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ work.title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<style>
+  .post-image-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  
+  .main-image {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  
+  @media (max-width: 768px) {
+    .main-image {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+  }
+  
+  .comment-item {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .like-btn.active {
+    color: #D4AF37;
+  }
+  
+  .like-btn.active iconify-icon {
+    fill: #D4AF37;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 作品详情头部 -->
+<section class="bg-bluewhite text-white py-8 px-10">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-wrap items-center gap-4">
+      <a href="{% url 'appreciation:appreciation' %}" class="text-white/80 hover:text-white transition">
+        <iconify-icon icon="mdi:arrow-left"></iconify-icon>
+        <span>返回作品列表</span>
+      </a>
+      <span class="text-white/30">/</span>
+      <h1 class="text-2xl md:text-3xl font-serif font-bold">{{ work.title }}</h1>
+    </div>
+  </div>
+</section>
+
+<!-- 作品详情内容区 -->
+<section class="py-10 px-10">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- 左侧作品内容 -->
+      <div class="lg:col-span-2">
+        <!-- 作品卡片 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+          <!-- 作者信息 -->
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center gap-4">
+              <img src="https://picsum.photos/id/22/200/200" alt="作者头像" class="w-12 h-12 rounded-full object-cover border-2 border-bluewhite">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="font-semibold text-gray-800">{{ work.user.username }}</h3>
+                  <span class="bg-bluewhite/10 text-bluewhite text-xs px-2 py-0.5 rounded-full">官方认证</span>
+                </div>
+                <p class="text-sm text-gray-500">{{ work.created_at|date:"Y-m-d H:i" }} 发布</p>
+              </div>
+              <div class="ml-auto flex gap-2">
+                <button class="text-gray-600 hover:text-bluewhite transition p-2">
+                  <iconify-icon icon="mdi:share-variant"></iconify-icon>
+                </button>
+                <button class="text-gray-600 hover:text-bluewhite transition p-2">
+                  <iconify-icon icon="mdi:bookmark-outline"></iconify-icon>
+                </button>
+                <button class="text-gray-600 hover:text-bluewhite transition p-2">
+                  <iconify-icon icon="mdi:dots-vertical"></iconify-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 作品图片 -->
+          <div class="post-image-container">
+            {% if images %}
+              {% for image in images %}
+                <img
+                  src="{% static image.image %}"
+                  alt="{{ work.title }} 图片 {{ forloop.counter }}"
+                  class="w-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition {% if forloop.first %}h-full main-image{% else %}h-48{% endif %}"
+                >
+              {% endfor %}
+            {% else %}
+              <!-- 无作品图片时的占位图 -->
+              <img src="https://picsum.photos/id/42/1200/900" alt="作品占位图" class="w-full h-full object-cover rounded-lg main-image">
+            {% endif %}
+          </div>
+          
+          <!-- 作品描述 -->
+          <div class="p-6">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-4">{{ work.title }}</h2>
+            
+            <p class="text-gray-700 mb-6 leading-relaxed">
+              {{ work.description|linebreaksbr }}
+            </p>
+            
+            <!-- 作品参数 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-xs text-gray-500">材质</p>
+                <p class="text-gray-800 font-medium">{{ work.material }}</p>
+              </div>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-xs text-gray-500">工艺</p>
+                <p class="text-gray-800 font-medium">{{ work.technique }}</p>
+              </div>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-xs text-gray-500">规格</p>
+                <p class="text-gray-800 font-medium">{{ work.specification }}</p>
+              </div>
+              <div class="bg-gray-50 p-3 rounded-lg">
+                <p class="text-xs text-gray-500">产地</p>
+                <p class="text-gray-800 font-medium">{{ work.origin }}</p>
+              </div>
+            </div>
+            
+            <!-- 作品标签 -->
+            <div class="flex flex-wrap gap-2 mb-6">
+              {% if tags %}
+                {% for tag in tags %}
+                  <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">{{ tag.name }}</span>
+                {% endfor %}
+              {% else %}
+                <span class="text-xs text-gray-400">暂无标签</span>
+              {% endif %}
+            </div>
+            
+            <!-- 互动区 -->
+            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+              <div class="flex items-center gap-6">
+                <button class="like-btn flex items-center gap-2 text-gray-600 hover:text-goldline transition">
+                  <iconify-icon icon="mdi:heart" class="w-5 h-5"></iconify-icon>
+                  <span>{{ work.likes_count }} 喜欢</span>
+                </button>
+                <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+                  <iconify-icon icon="mdi:comment" class="w-5 h-5"></iconify-icon>
+                  <span>{{ work.comments_count }} 评论</span>
+                </button>
+              </div>
+              <div>
+                <button class="text-gray-600 hover:text-bluewhite transition flex items-center gap-1">
+                  <iconify-icon icon="mdi:eye" class="w-4 h-4"></iconify-icon>
+                  <span class="text-sm">{{ work.views_count }} 浏览</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 评论区 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="text-xl font-bold text-gray-800">作品评论 (32)</h3>
+          </div>
+          
+          <!-- 评论输入框 -->
+          <div class="p-6 border-b border-gray-100">
+            <div class="flex gap-4">
+              <img src="https://picsum.photos/id/64/200/200" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+              <div class="flex-1">
+                <textarea placeholder="分享你的看法..." class="w-full border border-gray-200 rounded-lg p-3 focus:border-bluewhite focus:ring-1 focus:ring-bluewhite outline-none transition resize-none" rows="3"></textarea>
+                <div class="flex justify-end mt-3">
+                  <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
+                    发表评论
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 评论列表 -->
+          <div class="divide-y divide-gray-100">
+            <!-- 评论项1 -->
+            <div class="comment-item p-6">
+              <div class="flex gap-4">
+                <img src="https://picsum.photos/id/62/200/200" alt="评论者头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-1">
+                    <h4 class="font-medium text-gray-800">陶瓷收藏者</h4>
+                    <span class="text-xs text-gray-500">2天前</span>
+                  </div>
+                  <p class="text-gray-600 mb-3">这套釉里红的发色非常漂亮，层次感很强，请问是否支持定制图案？</p>
+                  <div class="flex items-center gap-4">
+                    <button class="text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1">
+                      <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
+                      <span>24</span>
+                    </button>
+                    <button class="text-gray-500 hover:text-bluewhite text-sm transition">回复</button>
+                  </div>
+                  
+                  <!-- 作者回复 -->
+                  <div class="mt-4 ml-6 pl-4 border-l-2 border-gray-100">
+                    <div class="flex gap-3">
+                      <img src="https://picsum.photos/id/22/200/200" alt="工作室头像" class="w-8 h-8 rounded-full object-cover border border-bluewhite">
+                      <div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <h5 class="font-medium text-gray-800 text-sm">青韵陶艺工作室</h5>
+                          <span class="bg-bluewhite/10 text-bluewhite text-xs px-1.5 py-0.5 rounded">作者</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-2">感谢关注，支持定制图案，需要额外支付30%的设计费用，周期会延长15天左右。</p>
+                        <span class="text-xs text-gray-500">1天前</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 评论项2 -->
+            <div class="comment-item p-6">
+              <div class="flex gap-4">
+                <img src="https://picsum.photos/id/65/200/200" alt="评论者头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-1">
+                    <h4 class="font-medium text-gray-800">茶道爱好者</h4>
+                    <span class="text-xs text-gray-500">3天前</span>
+                  </div>
+                  <p class="text-gray-600 mb-3">茶壶的容量大概是多少？适合几人使用？想入手一套家用。</p>
+                  <div class="flex items-center gap-4">
+                    <button class="text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1">
+                      <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
+                      <span>12</span>
+                    </button>
+                    <button class="text-gray-500 hover:text-bluewhite text-sm transition">回复</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 评论项3 -->
+            <div class="comment-item p-6">
+              <div class="flex gap-4">
+                <img src="https://picsum.photos/id/66/200/200" alt="评论者头像" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                  <div class="flex items-center justify-between mb-1">
+                    <h4 class="font-medium text-gray-800">古韵轩主</h4>
+                    <span class="text-xs text-gray-500">3天前</span>
+                  </div>
+                  <p class="text-gray-600 mb-3">缠枝莲纹的绘制很见功底，线条流畅自然，釉色也很正，是难得的好作品。</p>
+                  <div class="flex items-center gap-4">
+                    <button class="text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1">
+                      <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
+                      <span>36</span>
+                    </button>
+                    <button class="text-gray-500 hover:text-bluewhite text-sm transition">回复</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 加载更多评论 -->
+          <div class="p-6 text-center">
+            <button class="border border-gray-300 text-gray-700 px-6 py-2 rounded-full text-sm hover:bg-gray-50 transition">
+              加载更多评论
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 右侧边栏 -->
+      <div class="lg:col-span-1">
+        <!-- 购买卡片 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+          <div class="p-6 border-b border-gray-100">
+            {% if work.is_salable %}
+              <div class="text-goldline font-bold text-2xl mb-1">¥{{ work.price }}</div>
+              <p class="text-gray-500 text-sm">库存: {{ work.stock }}</p>
+            {% else %}
+              <div class="text-gray-800 font-bold text-lg mb-1">仅展示，不对外销售</div>
+              <p class="text-gray-500 text-sm">如有合作意向，可联系作者</p>
+            {% endif %}
+          </div>
+          
+          {% if work.is_salable %}
+          <div class="p-6 space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+              <button class="border border-bluewhite text-bluewhite px-4 py-3 rounded-lg text-sm hover:bg-bluewhite hover:text-white transition flex items-center justify-center gap-2">
+                <iconify-icon icon="mdi:cart-plus"></iconify-icon>
+                加入购物车
+              </button>
+              <button class="bg-bluewhite text-white px-4 py-3 rounded-lg text-sm hover:bg-opacity-90 transition flex items-center justify-center gap-2">
+                <iconify-icon icon="mdi:credit-card"></iconify-icon>
+                立即购买
+              </button>
+            </div>
+            
+            <button class="w-full border border-goldline text-goldline px-4 py-3 rounded-lg text-sm hover:bg-goldline hover:text-white transition flex items-center justify-center gap-2">
+              <iconify-icon icon="mdi:gift"></iconify-icon>
+              礼品包装
+            </button>
+            
+            <div class="pt-4 border-t border-gray-100">
+              <h4 class="font-medium text-gray-800 mb-3">服务保障</h4>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                  <iconify-icon icon="mdi:check-circle text-green-500"></iconify-icon>
+                  <span>正品保证</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                  <iconify-icon icon="mdi:check-circle text-green-500"></iconify-icon>
+                  <span>7天无理由</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                  <iconify-icon icon="mdi:check-circle text-green-500"></iconify-icon>
+                  <span>专业包装</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-600">
+                  <iconify-icon icon="mdi:check-circle text-green-500"></iconify-icon>
+                  <span>顺丰配送</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        
+        <!-- 作者信息 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="text-lg font-bold text-gray-800">作者信息</h3>
+          </div>
+          
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <img src="https://picsum.photos/id/22/200/200" alt="工作室头像" class="w-16 h-16 rounded-full object-cover border-2 border-bluewhite">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-semibold text-gray-800">青韵陶艺工作室</h4>
+                  <span class="bg-bluewhite/10 text-bluewhite text-xs px-2 py-0.5 rounded-full">官方认证</span>
+                </div>
+                <p class="text-sm text-gray-500">专注釉里红工艺20年</p>
+              </div>
+            </div>
+            
+            <p class="text-gray-600 text-sm mb-4">
+              青韵陶艺工作室成立于2003年，致力于传承和创新景德镇传统釉里红工艺，作品多次获得国家级工艺美术奖项。
+            </p>
+            
+            <div class="flex items-center justify-between mb-4">
+              <div class="text-center">
+                <div class="text-gray-800 font-bold">46</div>
+                <div class="text-xs text-gray-500">作品</div>
+              </div>
+              <div class="text-center">
+                <div class="text-gray-800 font-bold">1.2k</div>
+                <div class="text-xs text-gray-500">粉丝</div>
+              </div>
+              <div class="text-center">
+                <div class="text-gray-800 font-bold">98%</div>
+                <div class="text-xs text-gray-500">好评</div>
+              </div>
+            </div>
+            
+            <button class="w-full border border-bluewhite text-bluewhite px-4 py-2 rounded-lg text-sm hover:bg-bluewhite hover:text-white transition">
+              关注工作室
+            </button>
+          </div>
+        </div>
+        
+        <!-- 相关推荐 -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="text-lg font-bold text-gray-800">相关作品推荐</h3>
+          </div>
+          
+          <div class="divide-y divide-gray-100">
+            <!-- 推荐作品1 -->
+            <div class="p-4 hover:bg-gray-50 transition">
+              <a href="#" class="flex gap-3">
+                <img src="https://picsum.photos/id/52/300/300" alt="相关作品" class="w-20 h-20 rounded-lg object-cover">
+                <div>
+                  <h4 class="font-medium text-gray-800 text-sm line-clamp-2">青花山水纹茶具套装</h4>
+                  <p class="text-goldline text-sm font-medium mt-1">¥2,880.00</p>
+                </div>
+              </a>
+            </div>
+            
+            <!-- 推荐作品2 -->
+            <div class="p-4 hover:bg-gray-50 transition">
+              <a href="#" class="flex gap-3">
+                <img src="https://picsum.photos/id/53/300/300" alt="相关作品" class="w-20 h-20 rounded-lg object-cover">
+                <div>
+                  <h4 class="font-medium text-gray-800 text-sm line-clamp-2">釉里红缠枝牡丹纹瓶</h4>
+                  <p class="text-goldline text-sm font-medium mt-1">¥5,680.00</p>
+                </div>
+              </a>
+            </div>
+            
+            <!-- 推荐作品3 -->
+            <div class="p-4 hover:bg-gray-50 transition">
+              <a href="#" class="flex gap-3">
+                <img src="https://picsum.photos/id/54/300/300" alt="相关作品" class="w-20 h-20 rounded-lg object-cover">
+                <div>
+                  <h4 class="font-medium text-gray-800 text-sm line-clamp-2">青花釉里红鱼藻纹茶杯</h4>
+                  <p class="text-goldline text-sm font-medium mt-1">¥680.00</p>
+                </div>
+              </a>
+            </div>
+          </div>
+          
+          <div class="p-4 text-center border-t border-gray-100">
+            <a href="#" class="text-bluewhite text-sm hover:underline">查看更多</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // 点赞功能
+  document.querySelector('.like-btn').addEventListener('click', function() {
+    this.classList.toggle('active');
+    const likeCount = this.querySelector('span');
+    let count = parseInt(likeCount.textContent);
+    
+    if (this.classList.contains('active')) {
+      likeCount.textContent = `${count + 1} 喜欢`;
+    } else {
+      likeCount.textContent = `${count - 1} 喜欢`;
+    }
+  });
+  
+  // 图片查看功能
+  const images = document.querySelectorAll('.post-image-container img');
+  images.forEach(img => {
+    img.addEventListener('click', function() {
+      // 这里可以实现图片预览功能
+      console.log('查看图片:', this.alt);
+      // 实际项目中可以使用模态框展示大图
+    });
+  });
+</script>
+{% endblock %}

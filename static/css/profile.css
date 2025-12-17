@@ -1,0 +1,67 @@
+.profile-tab.active {
+    border-color: #D4AF37;
+    color: #D4AF37;
+    font-weight: 600;
+  }
+  .profile-content {
+    display: none;
+  }
+  .profile-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 模态框动画 */
+#edit-profile-modal {
+  animation: fadeIn 0.2s ease-out;
+}
+
+#edit-profile-modal > div {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 表单输入框基础样式 - 增强边界可见性 */
+.form-input {
+  border: 1px solid #d1d5db; /* 更明显的边框颜色 */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* 表单输入框焦点样式 */
+.form-input:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+  outline: none;
+}
+
+/* 头像上传悬停效果增强 - 仅针对编辑资料模态框中的头像 */
+#edit-profile-modal .relative:hover .absolute {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* 确保模态框内容过长时可以滚动 */
+#edit-profile-modal > div {
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb; /* 为模态框添加明显的边框 */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05); /* 增强阴影效果 */
+}

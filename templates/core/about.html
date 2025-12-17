@@ -1,0 +1,333 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}关于我们 - 景德窑韵{% endblock %}
+
+{% block content %}
+  <!-- 关于我们头部横幅 -->
+  <section class="text-white py-16 px-10" style="background-image: url('https://picsum.photos/id/30/1920/600'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-serif font-bold mb-4">关于景德窑韵</h1>
+      <p class="text-lg max-w-2xl opacity-90">传承千年陶瓷文化，连接艺术与生活的桥梁</p>
+    </div>
+  </section>
+
+  <!-- 平台简介 -->
+  <section class="py-16 px-10 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+            <span class="w-1 h-8 bg-goldline mr-4"></span>
+            我们的故事
+          </h2>
+          <p class="text-gray-600 mb-4 leading-relaxed">
+            景德窑韵创立于2015年，植根于千年瓷都景德镇，是国内领先的陶瓷艺术文化平台。我们致力于传承和发扬中国陶瓷文化，连接优秀陶艺家和爱好者，让传统工艺在当代焕发新的生命力。
+          </p>
+          <p class="text-gray-600 mb-6 leading-relaxed">
+            平台汇聚了百余位国家级、省级工艺美术大师及非遗传承人，通过线上展示、线下展览、文化交流等形式，让更多人了解陶瓷艺术的魅力，感受千年窑火的温度。
+          </p>
+          <div class="flex gap-4">
+            <div class="flex items-center">
+              <div class="w-12 h-12 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-3">
+                <iconify-icon icon="mdi:account-group" class="text-xl"></iconify-icon>
+              </div>
+              <div>
+                <div class="font-bold text-gray-800">120+</div>
+                <div class="text-sm text-gray-500">合作大师</div>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="w-12 h-12 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-3">
+                <iconify-icon icon="mdi:archive" class="text-xl"></iconify-icon>
+              </div>
+              <div>
+                <div class="font-bold text-gray-800">3000+</div>
+                <div class="text-sm text-gray-500">艺术作品</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-4">
+            <img src="https://picsum.photos/id/29/600/800" alt="景德镇窑厂" class="rounded-lg shadow-md w-full h-64 object-cover">
+            <img src="https://picsum.photos/id/36/600/400" alt="陶瓷制作工艺" class="rounded-lg shadow-md w-full h-40 object-cover">
+          </div>
+          <div class="space-y-4 pt-8">
+            <img src="https://picsum.photos/id/37/600/400" alt="陶瓷艺术展览" class="rounded-lg shadow-md w-full h-40 object-cover">
+            <img src="https://picsum.photos/id/42/600/800" alt="大师创作中" class="rounded-lg shadow-md w-full h-64 object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 我们的使命与愿景 -->
+  <section class="py-16 px-10 bg-porcelain">
+    <div class="max-w-5xl mx-auto text-center mb-12">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">使命与愿景</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">我们致力于让陶瓷艺术走进生活，让传统工艺焕发新生</p>
+    </div>
+    
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300">
+        <div class="w-16 h-16 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mx-auto mb-6">
+          <iconify-icon icon="mdi:book-open-page-variant" class="text-2xl"></iconify-icon>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-4">传承文化</h3>
+        <p class="text-gray-600">
+          系统整理和保存传统陶瓷工艺，记录大师技艺与经验，让千年陶瓷文化得以传承。
+        </p>
+      </div>
+      
+      <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300">
+        <div class="w-16 h-16 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mx-auto mb-6">
+          <iconify-icon icon="mdi:lightbulb" class="text-2xl"></iconify-icon>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-4">创新发展</h3>
+        <p class="text-gray-600">
+          推动传统工艺与现代设计的融合，鼓励艺术创新，让陶瓷艺术适应时代发展。
+        </p>
+      </div>
+      
+      <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition transform hover:-translate-y-1 duration-300">
+        <div class="w-16 h-16 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mx-auto mb-6">
+          <iconify-icon icon="mdi:earth" class="text-2xl"></iconify-icon>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-4">传播推广</h3>
+        <p class="text-gray-600">
+          通过线上线下多种渠道，向世界展示中国陶瓷艺术的魅力，提升文化影响力。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 团队介绍 -->
+  <section class="py-16 px-10 bg-white">
+    <div class="max-w-5xl mx-auto text-center mb-12">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">核心团队</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">由陶瓷艺术家、文化学者和互联网专业人士组成的跨界团队</p>
+    </div>
+    
+    <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-porcelain rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+        <img src="https://picsum.photos/id/64/400/400" alt="团队成员" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <h3 class="font-bold text-xl text-gray-800 mb-1">张明远</h3>
+          <p class="text-bluewhite mb-3">创始人 / CEO</p>
+          <p class="text-gray-600 text-sm">
+            景德镇陶瓷学院毕业，深耕陶瓷行业20年，致力于传统工艺的保护与传承。
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-porcelain rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+        <img src="https://picsum.photos/id/65/400/400" alt="团队成员" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <h3 class="font-bold text-xl text-gray-800 mb-1">李静怡</h3>
+          <p class="text-bluewhite mb-3">艺术总监</p>
+          <p class="text-gray-600 text-sm">
+            国家级工艺美术大师，擅长青花与颜色釉创作，作品曾获多项国家级奖项。
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-porcelain rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+        <img src="https://picsum.photos/id/91/400/400" alt="团队成员" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <h3 class="font-bold text-xl text-gray-800 mb-1">王建国</h3>
+          <p class="text-bluewhite mb-3">文化顾问</p>
+          <p class="text-gray-600 text-sm">
+            陶瓷文化学者，著有多部陶瓷史论著作，致力于陶瓷文化的研究与传播。
+          </p>
+        </div>
+      </div>
+      
+      <div class="bg-porcelain rounded-xl overflow-hidden shadow-md hover:shadow-lg transition">
+        <img src="https://picsum.photos/id/26/400/400" alt="团队成员" class="w-full h-64 object-cover">
+        <div class="p-6">
+          <h3 class="font-bold text-xl text-gray-800 mb-1">陈思远</h3>
+          <p class="text-bluewhite mb-3">技术总监</p>
+          <p class="text-gray-600 text-sm">
+            互联网行业资深从业者，负责平台技术架构与数字展览技术研发。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 发展历程 -->
+  <section class="py-16 px-10 bg-porcelain">
+    <div class="max-w-5xl mx-auto text-center mb-12">
+      <h2 class="text-3xl font-serif font-bold text-gray-800 mb-4">发展历程</h2>
+      <div class="w-24 h-1 bg-goldline mx-auto mb-6"></div>
+      <p class="text-gray-600 max-w-3xl mx-auto">见证景德窑韵的成长足迹</p>
+    </div>
+    
+    <div class="max-w-4xl mx-auto">
+      <div class="space-y-12">
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">2015</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md relative before:absolute before:w-0.5 before:h-full before:bg-goldline before:left-[-33px] before:top-0">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">平台成立</h3>
+            <p class="text-gray-600 leading-relaxed">
+              景德窑韵平台正式成立，初期联合10位景德镇本地陶艺家，开启线上展示陶瓷艺术的探索。
+            </p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">2018</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md relative before:absolute before:w-0.5 before:h-full before:bg-goldline before:left-[-33px] before:top-0">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">线下展厅开放</h3>
+            <p class="text-gray-600 leading-relaxed">
+              景德镇首个实体展厅落成，面积达800平方米，成为连接线上线下的重要窗口。
+            </p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">2020</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md relative before:absolute before:w-0.5 before:h-full before:bg-goldline before:left-[-33px] before:top-0">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">大师工坊项目启动</h3>
+            <p class="text-gray-600 leading-relaxed">
+              启动"大师工坊"项目，邀请国家级大师开设工作室，进行技艺传承与创作。
+            </p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-[100px_1fr] gap-8">
+          <div class="text-right">
+            <div class="text-goldline text-2xl font-serif">2023</div>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-md">
+            <h3 class="font-bold text-xl text-gray-800 mb-3">国际文化交流中心成立</h3>
+            <p class="text-gray-600 leading-relaxed">
+              成立国际文化交流中心，推动中国陶瓷艺术走向世界，与多国博物馆建立合作关系。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系我们 -->
+  <section class="py-16 px-10 bg-white">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-3xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+            <span class="w-1 h-8 bg-goldline mr-4"></span>
+            联系我们
+          </h2>
+          <p class="text-gray-600 mb-8 leading-relaxed">
+            无论您是陶艺家、收藏家还是爱好者，我们都期待与您建立联系。欢迎参观我们的展厅，或通过以下方式与我们沟通。
+          </p>
+          
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                <iconify-icon icon="mdi:map-marker"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-800 mb-1">地址</h3>
+                <p class="text-gray-600">江西省景德镇市珠山区陶艺街188号 景德窑韵文化中心</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                <iconify-icon icon="mdi:phone"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-800 mb-1">电话</h3>
+                <p class="text-gray-600">0798-88888888</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                <iconify-icon icon="mdi:email"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-800 mb-1">邮箱</h3>
+                <p class="text-gray-600">info@jingdeyaoyun.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                <iconify-icon icon="mdi:clock"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="font-bold text-gray-800 mb-1">开放时间</h3>
+                <p class="text-gray-600">周二至周日 9:00-17:30（周一闭馆）</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8">
+            <h3 class="font-bold text-gray-800 mb-4">关注我们</h3>
+            <div class="flex space-x-4">
+              <a class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite hover:bg-bluewhite hover:text-white transition" href="#">
+                <iconify-icon class="text-xl" icon="mdi:wechat"></iconify-icon>
+              </a>
+              <a class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite hover:bg-bluewhite hover:text-white transition" href="#">
+                <iconify-icon class="text-xl" icon="mdi:weibo"></iconify-icon>
+              </a>
+              <a class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite hover:bg-bluewhite hover:text-white transition" href="#">
+                <iconify-icon class="text-xl" icon="mdi:instagram"></iconify-icon>
+              </a>
+              <a class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite hover:bg-bluewhite hover:text-white transition" href="#">
+                <iconify-icon class="text-xl" icon="mdi:youtube"></iconify-icon>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-porcelain rounded-xl p-8 shadow-md">
+          <h3 class="text-2xl font-serif font-bold text-gray-800 mb-6">留言咨询</h3>
+          <form>
+            <div class="mb-4">
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-1">姓名</label>
+              <input type="text" id="name" class="form-input w-full px-4 py-2 rounded-lg" placeholder="请输入您的姓名">
+            </div>
+            
+            <div class="mb-4">
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
+              <input type="email" id="email" class="form-input w-full px-4 py-2 rounded-lg" placeholder="请输入您的邮箱">
+            </div>
+            
+            <div class="mb-4">
+              <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">主题</label>
+              <select id="subject" class="form-input w-full px-4 py-2 rounded-lg">
+                <option value="">请选择咨询主题</option>
+                <option value="cooperation">合作洽谈</option>
+                <option value="exhibition">展览信息</option>
+                <option value="collection">收藏咨询</option>
+                <option value="other">其他问题</option>
+              </select>
+            </div>
+            
+            <div class="mb-6">
+              <label for="message" class="block text-sm font-medium text-gray-700 mb-1">留言内容</label>
+              <textarea id="message" rows="4" class="form-input w-full px-4 py-2 rounded-lg" placeholder="请输入您的留言内容"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full bg-goldline text-white py-3 px-6 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center justify-center gap-2">
+              提交留言
+              <iconify-icon icon="mdi:send"></iconify-icon>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

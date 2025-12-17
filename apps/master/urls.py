@@ -3,4 +3,5 @@ from apps.master import views
 
 urlpatterns = [
     path('', views.master, name='master'),
+    path('customize/', views.customize, name='customize'),
 ]
