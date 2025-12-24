@@ -44,7 +44,7 @@
         <nav class="flex space-x-4 absolute left-1/2 transform -translate-x-1/2">
           <a class="nav-link text-white hover:text-goldline" href="{% url 'index' %}">首页</a>
           <a class="nav-link text-white hover:text-goldline" href="{% url 'appreciation:appreciation' %}">作品欣赏</a>
-          <a class="nav-link text-white hover:text-goldline" href="{% url 'master' %}">大师专栏</a>
+          <a class="nav-link text-white hover:text-goldline" href="{% url 'master:master' %}">大师专栏</a>
           <a class="nav-link text-white hover:text-goldline" href="{% url 'about' %}">关于我们</a>
         </nav>
         
@@ -57,21 +57,21 @@
           {% if user.is_authenticated %}
             <!-- 登录状态显示圆形头像 -->
             <div class="relative group">
-              <a href="{% url 'profile' %}" class="block">
-                <img src="https://picsum.photos/40/40" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white object-cover cursor-pointer">
+              <a href="{% url 'user:profile' %}" class="block">
+                <img src="{{ user.avatar.url }}" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white object-cover cursor-pointer">
               </a>
               <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <a href="{% url 'profile' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">个人中心</a>
+                <a href="{% url 'user:profile' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">个人中心</a>
                 <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">我的收藏</a>
                 <div class="border-t border-gray-200 my-1"></div>
-                <a href="{% url 'user_logout' %}" class="block px-4 py-2 text-red-600 hover:bg-red-50 font-medium">
+                <a href="{% url 'user:user_logout' %}" class="block px-4 py-2 text-red-600 hover:bg-red-50 font-medium">
                   <iconify-icon class="mr-2" icon="mdi:logout"></iconify-icon>退出登录
                 </a>
               </div>
             </div>
           {% else %}
             <!-- 未登录状态显示登录按钮 -->
-            <a class="bg-white text-bluewhite py-1.5 px-4 rounded-full font-medium hover:bg-opacity-90 transition" href="{% url 'user_login' %}">登录</a>
+            <a class="bg-white text-bluewhite py-1.5 px-4 rounded-full font-medium hover:bg-opacity-90 transition" href="{% url 'user:user_login' %}">登录</a>
           {% endif %}
         </div>
       </div>

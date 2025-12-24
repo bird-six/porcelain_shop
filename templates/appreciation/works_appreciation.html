@@ -44,125 +44,17 @@
     <div class="max-w-6xl mx-auto grid grid-cols-12 gap-8">
       <!-- 作品流 (主内容区) -->
       <div class="col-span-8">
-        <!-- 作品卡片 1 - 用户分享 -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 transform transition hover:shadow-lg">
-          <!-- 作者信息 -->
-          <div class="p-6">
-            <div class="flex items-center gap-4">
-              <img src="https://picsum.photos/id/64/200/200" alt="用户头像" class="w-12 h-12 rounded-full object-cover">
-              <div>
-                <h3 class="font-semibold text-gray-800">林风陶艺工作室</h3>
-                <p class="text-sm text-gray-500">2小时前发布</p>
-              </div>
-              <button class="ml-auto text-gray-400 hover:text-bluewhite">
-                <iconify-icon icon="mdi:dots-vertical"></iconify-icon>
-              </button>
+        <div id="work-list">
+          {% if works %}
+            {% include "appreciation/_work_cards.html" %}
+          {% else %}
+            <div class="bg-white rounded-xl shadow-md p-8 text-center text-gray-500">
+              暂无作品，快去发布你的第一件作品吧～
             </div>
-            
-            <!-- 作品描述 -->
-            <p class="mt-4 text-gray-700">
-              新完成的青花山水纹茶杯，尝试了传统分水技法，釉色温润如玉，欢迎各位老师指点。
-            </p>
-          </div>
-          
-          <!-- 作品图片 -->
-          <div class="grid grid-cols-2 gap-1">
-            <img src="https://picsum.photos/id/28/800/800" alt="陶瓷作品" class="w-full h-64 object-cover">
-            <img src="https://picsum.photos/id/29/800/800" alt="陶瓷作品细节" class="w-full h-64 object-cover">
-          </div>
-          
-          <!-- 互动区 -->
-          <div class="p-6">
-            <div class="flex items-center gap-6 mb-4">
-              <button class="flex items-center gap-2 text-gray-600 hover:text-goldline transition">
-                <iconify-icon icon="mdi:heart"></iconify-icon>
-                <span>42 喜欢</span>
-              </button>
-              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
-                <iconify-icon icon="mdi:comment"></iconify-icon>
-                <span>18 评论</span>
-              </button>
-              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
-                <iconify-icon icon="mdi:share-variant"></iconify-icon>
-                <span>分享</span>
-              </button>
-            </div>
-            
-            <!-- 购买入口 -->
-            <div class="border-t border-gray-100 pt-4 flex items-center justify-between">
-              <div class="text-goldline font-semibold">¥268.00</div>
-              <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
-                联系购买
-              </button>
-            </div>
-          </div>
-          
-          <!-- 评论预览 -->
-          <div class="px-6 pb-6 pt-0">
-            <div class="flex items-start gap-3 mb-3">
-              <img src="https://picsum.photos/id/65/200/200" alt="评论者头像" class="w-8 h-8 rounded-full object-cover mt-1">
-              <div class="bg-gray-50 p-3 rounded-lg">
-                <h4 class="font-medium text-gray-800 text-sm">青花瓷匠人</h4>
-                <p class="text-gray-600 text-sm mt-1">分水技法很到位，层次感很强，请问用的是什么钴料？</p>
-              </div>
-            </div>
-            <button class="text-bluewhite text-sm hover:underline">查看全部18条评论</button>
-          </div>
+          {% endif %}
         </div>
-        
-        <!-- 作品卡片 2 - 大师作品 -->
-        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 transform transition hover:shadow-lg">
-          <!-- 作者信息 -->
-          <div class="p-6">
-            <div class="flex items-center gap-4">
-              <img src="https://picsum.photos/id/91/200/200" alt="大师头像" class="w-12 h-12 rounded-full object-cover">
-              <div>
-                <div class="flex items-center gap-2">
-                  <h3 class="font-semibold text-gray-800">王怀俊大师</h3>
-                  <span class="bg-goldline/10 text-goldline text-xs px-2 py-0.5 rounded-full">认证大师</span>
-                </div>
-                <p class="text-sm text-gray-500">昨天 15:30 发布</p>
-              </div>
-              <button class="ml-auto text-gray-400 hover:text-bluewhite">
-                <iconify-icon icon="mdi:dots-vertical"></iconify-icon>
-              </button>
-            </div>
-            
-            <!-- 作品描述 -->
-            <p class="mt-4 text-gray-700">
-              最新创作的《山居图》青花瓶，耗时三个月完成，采用传统柴窑烧制，限量3件，其中一件将在下周的艺术展展出。
-            </p>
-          </div>
-          
-          <!-- 作品图片 -->
-          <img src="https://picsum.photos/id/36/1200/800" alt="大师陶瓷作品" class="w-full h-96 object-cover">
-          
-          <!-- 互动区 -->
-          <div class="p-6">
-            <div class="flex items-center gap-6 mb-4">
-              <button class="flex items-center gap-2 text-gray-600 hover:text-goldline transition">
-                <iconify-icon icon="mdi:heart"></iconify-icon>
-                <span>256 喜欢</span>
-              </button>
-              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
-                <iconify-icon icon="mdi:comment"></iconify-icon>
-                <span>78 评论</span>
-              </button>
-              <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
-                <iconify-icon icon="mdi:share-variant"></iconify-icon>
-                <span>分享</span>
-              </button>
-            </div>
-            
-            <!-- 购买入口 -->
-            <div class="border-t border-gray-100 pt-4 flex items-center justify-between">
-              <div class="text-goldline font-semibold">¥12,800.00</div>
-              <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
-                立即购买
-              </button>
-            </div>
-          </div>
-        </div>
+        <!-- 无限滚动触发器 -->
+        <div id="load-more-trigger" class="h-10"></div>
       </div>
       
       <!-- 侧边栏 -->
@@ -222,4 +114,70 @@
       </div>
     </div>
   </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const workList = document.getElementById('work-list');
+      const trigger = document.getElementById('load-more-trigger');
+
+      if (!workList || !trigger) return;
+
+      let loading = false;
+      let nextPage = {% if page_obj and page_obj.has_next %}{{ page_obj.next_page_number }}{% else %}null{% endif %};
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadMore();
+            }
+          });
+        },
+        {
+          root: null,
+          rootMargin: '0px 0px 200px 0px',
+          threshold: 0,
+        }
+      );
+
+      observer.observe(trigger);
+
+      function loadMore() {
+        if (loading || !nextPage) return;
+        loading = true;
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('page', nextPage);
+
+        fetch(url.toString(), {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data.html) {
+              workList.insertAdjacentHTML('beforeend', data.html);
+            }
+            if (data.has_next && data.next_page) {
+              nextPage = data.next_page;
+            } else {
+              nextPage = null;
+              observer.disconnect();
+            }
+          })
+          .catch((error) => {
+            console.error('加载更多作品失败:', error);
+          })
+          .finally(() => {
+            loading = false;
+          });
+      }
+    });
+  </script>
 {% endblock %}

@@ -7,3 +7,7 @@ def master(request):
 def customize(request):
 
     return render(request, 'master/customize.html')
+
+def master_detail(request):
+
+    return render(request, 'master/master_detail.html')

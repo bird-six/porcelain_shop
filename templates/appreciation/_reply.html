@@ -1,0 +1,45 @@
+<div class="mt-4 ml-6 pl-4 border-l-2 border-gray-100">
+  <div class="flex gap-3">
+    <img src="{{ reply.user.avatar.url }}" alt="{{ reply.user.name }}" class="w-8 h-8 rounded-full object-cover {% if reply.user == parent_comment.user %}border border-bluewhite{% endif %}">
+    <div class="flex-1">
+      <div class="flex items-center gap-2 mb-1">
+        <h5 class="font-medium text-gray-800 text-sm">{{ reply.user.name }}</h5>
+        {% if reply.user == parent_comment.user %}
+          <span class="bg-bluewhite/10 text-bluewhite text-xs px-1.5 py-0.5 rounded">作者</span>
+        {% endif %}
+      </div>
+      <p class="text-gray-600 text-sm mb-2">
+        <span class="text-bluewhite mr-1">回复 @{{ parent_comment.user.name }}:</span>
+        {{ reply.content }}
+      </p>
+      <span class="text-xs text-gray-500">{{ reply.created_at|date:"Y-m-d H:i" }}</span>
+      <div class="flex items-center gap-4 mt-2">
+        <button class="comment-like-btn text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1" data-comment-id="{{ reply.id }}">
+          <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
+          <span class="like-count">{{ reply.likes_count }}</span>
+        </button>
+        <button class="reply-btn text-gray-500 hover:text-bluewhite text-sm transition" data-comment-id="{{ reply.id }}">
+          回复
+        </button>
+        {% if request.user == reply.user %}
+        <button class="delete-comment-btn text-gray-500 hover:text-red-500 text-sm transition" data-comment-id="{{ reply.id }}">
+          删除
+        </button>
+        {% endif %}
+      </div>
+      <!-- 回复输入框 -->
+      <div class="reply-form mt-4" id="reply-form-{{ reply.id }}" style="display: none;">
+        <textarea class="reply-content w-full border border-gray-200 rounded-lg p-3 focus:border-bluewhite focus:ring-1 focus:ring-bluewhite outline-none transition resize-none" placeholder="写下你的回复..." rows="2"></textarea>
+        <div class="flex justify-end gap-2 mt-2">
+          <button class="cancel-reply-btn bg-gray-200 text-gray-700 px-4 py-1.5 rounded-full text-sm hover:bg-gray-300 transition" data-comment-id="{{ reply.id }}">
+            取消
+          </button>
+          <button class="submit-reply-btn bg-bluewhite text-white px-4 py-1.5 rounded-full text-sm hover:bg-opacity-90 transition" data-comment-id="{{ reply.id }}">
+            提交回复
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 不再递归渲染嵌套回复，所有回复都在同一层级显示 -->
+</div>

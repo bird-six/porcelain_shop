@@ -52,7 +52,7 @@
     
     <!-- 登录表单 -->
     <div id="login-form" class="px-8">
-      <form method="post" class="space-y-6" action="{% url 'user_login' %}">
+      <form method="post" class="space-y-6" action="{% url 'user:user_login' %}">
         {% csrf_token %}
         <div>
           <label for="login-username" class="block text-sm font-medium text-gray-700 mb-1">账号</label>
@@ -134,7 +134,7 @@
     
     <!-- 注册表单 -->
     <div id="register-form" class="px-8 hidden">
-      <form method="post" class="space-y-6" action="{% url 'user_register' %}" novalidate>
+      <form method="post" class="space-y-6" action="{% url 'user:user_register' %}" novalidate>
         {% csrf_token %}
         <div>
           <label for="register-username" class="block text-sm font-medium text-gray-700 mb-1">账号</label>

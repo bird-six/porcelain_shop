@@ -5,7 +5,7 @@
   <section id="carousel-container" class="relative h-[500px] overflow-hidden bg-gradient-to-r from-bluewhite/30 to-gray-100">
     <!-- 轮播项 -->
     <div class="carousel-item active absolute inset-0">
-      <img src="https://picsum.photos/id/152/1600/900" alt="景德镇陶瓷艺术" class="absolute inset-0 w-full h-full object-cover">
+      <img src="{% static 'img/index_img/轮播图2.webp' %}" alt="景德镇陶瓷艺术" class="absolute inset-0 w-full h-full object-cover">
       <div class="relative w-full h-full bg-gradient-to-r from-black/30 to-transparent">
         <div class="absolute bottom-16 left-16 max-w-2xl">
           <h1 class="text-5xl text-white font-serif font-bold mb-4">千年窑火，瓷韵传承</h1>
@@ -20,7 +20,7 @@
     
     <!-- 第二个轮播项 -->
     <div class="carousel-item absolute inset-0">
-      <img src="https://picsum.photos/id/175/1600/900" alt="青花瓷艺术" class="absolute inset-0 w-full h-full object-cover">
+      <img src="{% static 'img/index_img/轮播图3.webp' %}" alt="青花瓷艺术" class="absolute inset-0 w-full h-full object-cover">
       <div class="relative w-full h-full bg-gradient-to-r from-black/30 to-transparent">
         <div class="absolute bottom-16 left-16 max-w-2xl">
           <h1 class="text-5xl text-white font-serif font-bold mb-4">青花雅韵，匠心传承</h1>
@@ -35,7 +35,7 @@
     
     <!-- 添加第三个轮播项 -->
     <div class="carousel-item absolute inset-0">
-      <img src="https://picsum.photos/id/177/1600/900" alt="陶艺大师作品" class="absolute inset-0 w-full h-full object-cover">
+      <img src="{% static 'img/index_img/轮播图1.webp' %}" alt="陶艺大师作品" class="absolute inset-0 w-full h-full object-cover">
       <div class="relative w-full h-full bg-gradient-to-r from-black/30 to-transparent">
         <div class="absolute bottom-16 left-16 max-w-2xl">
           <h1 class="text-5xl text-white font-serif font-bold mb-4">大师云集，匠心之作</h1>
@@ -78,24 +78,9 @@
           <img src="https://picsum.photos/id/28/1200/800" alt="青花瓷系列" class="product-image">
           <div class="product-overlay"></div>
           <div class="product-badge">畅销</div>
-          <div class="product-rating">
-            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
-            4.9
-          </div>
           <div class="product-info">
             <h3 class="product-name">青花瓷系列</h3>
             <div class="product-price">青花瓷是中国最具代表性的陶瓷艺术，以钴料在瓷胎上绘制图案，经高温烧制后呈现青蓝色花纹，典雅高贵。</div>
-          </div>
-          <div class="product-actions">
-            <button class="action-btn" title="快速查看">
-              <iconify-icon icon="mdi:eye"></iconify-icon>
-            </button>
-            <button class="action-btn" title="添加到购物车">
-              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
-            </button>
-            <button class="action-btn" title="收藏">
-              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
-            </button>
           </div>
         </div>
       </div>
@@ -106,24 +91,9 @@
           <img src="https://picsum.photos/id/29/800/600" alt="釉里红精品" class="product-image">
           <div class="product-overlay"></div>
           <div class="product-badge">限量</div>
-          <div class="product-rating">
-            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
-            4.8
-          </div>
           <div class="product-info">
             <h3 class="product-name">釉里红精品</h3>
             <div class="product-price">釉里红是元代创烧的珍贵瓷器品种，以铜红料在釉下绘制图案，烧成后呈现鲜艳的红色，工艺难度极高。</div>
-          </div>
-          <div class="product-actions right-column">
-            <button class="action-btn" title="快速查看">
-              <iconify-icon icon="mdi:eye"></iconify-icon>
-            </button>
-            <button class="action-btn" title="添加到购物车">
-              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
-            </button>
-            <button class="action-btn" title="收藏">
-              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
-            </button>
           </div>
         </div>
       </div>
@@ -133,24 +103,9 @@
         <div class="product-card h-full">
           <img src="https://picsum.photos/id/30/800/600" alt="薄胎瓷艺" class="product-image">
           <div class="product-overlay"></div>
-          <div class="product-rating">
-            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
-            4.7
-          </div>
           <div class="product-info">
             <h3 class="product-name">薄胎瓷艺</h3>
             <div class="product-price">薄胎瓷以其薄如蝉翼、轻如浮云的特点著称，胎体厚度仅0.5毫米左右，透光性强，工艺精湛。</div>
-          </div>
-          <div class="product-actions right-column">
-            <button class="action-btn" title="快速查看">
-              <iconify-icon icon="mdi:eye"></iconify-icon>
-            </button>
-            <button class="action-btn" title="添加到购物车">
-              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
-            </button>
-            <button class="action-btn" title="收藏">
-              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
-            </button>
           </div>
         </div>
       </div>
@@ -161,24 +116,9 @@
           <img src="https://picsum.photos/id/31/800/600" alt="粉彩瓷器" class="product-image">
           <div class="product-overlay"></div>
           <div class="product-badge">新品</div>
-          <div class="product-rating">
-            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
-            4.6
-          </div>
           <div class="product-info">
             <h3 class="product-name">粉彩瓷器</h3>
             <div class="product-price">粉彩瓷是清代创烧的釉上彩品种，色彩柔和淡雅，层次丰富，具有粉润的艺术效果，深受皇室喜爱。</div>
-          </div>
-          <div class="product-actions right-column">
-            <button class="action-btn" title="快速查看">
-              <iconify-icon icon="mdi:eye"></iconify-icon>
-            </button>
-            <button class="action-btn" title="添加到购物车">
-              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
-            </button>
-            <button class="action-btn" title="收藏">
-              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
-            </button>
           </div>
         </div>
       </div>
@@ -188,24 +128,9 @@
         <div class="product-card h-full">
           <img src="https://picsum.photos/id/32/800/600" alt="玲珑瓷" class="product-image">
           <div class="product-overlay"></div>
-          <div class="product-rating">
-            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
-            4.9
-          </div>
           <div class="product-info">
             <h3 class="product-name">玲珑瓷</h3>
             <div class="product-price">玲珑瓷在坯体上镂雕出米粒状的通花洞，然后施釉烧成，具有透光不透影的特点，精巧别致。</div>
-          </div>
-          <div class="product-actions right-column">
-            <button class="action-btn" title="快速查看">
-              <iconify-icon icon="mdi:eye"></iconify-icon>
-            </button>
-            <button class="action-btn" title="添加到购物车">
-              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
-            </button>
-            <button class="action-btn" title="收藏">
-              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
-            </button>
           </div>
         </div>
       </div>
@@ -216,24 +141,9 @@
           <img src="https://picsum.photos/id/33/800/600" alt="颜色釉" class="product-image">
           <div class="product-overlay"></div>
           <div class="product-badge">促销</div>
-          <div class="product-rating">
-            <iconify-icon icon="mdi:star" class="text-goldline"></iconify-icon>
-            4.5
-          </div>
           <div class="product-info">
             <h3 class="product-name">颜色釉</h3>
             <div class="product-price">颜色釉瓷器通过不同金属氧化物在高温下呈现各种色彩，如钧红、天青、茶叶末等，色彩丰富多变。</div>
-          </div>
-          <div class="product-actions right-column">
-            <button class="action-btn" title="快速查看">
-              <iconify-icon icon="mdi:eye"></iconify-icon>
-            </button>
-            <button class="action-btn" title="添加到购物车">
-              <iconify-icon icon="mdi:cart-plus"></iconify-icon>
-            </button>
-            <button class="action-btn" title="收藏">
-              <iconify-icon icon="mdi:heart-outline"></iconify-icon>
-            </button>
           </div>
         </div>
       </div>

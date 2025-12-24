@@ -68,10 +68,10 @@
           <!-- 作者信息 -->
           <div class="p-6 border-b border-gray-100">
             <div class="flex items-center gap-4">
-              <img src="https://picsum.photos/id/22/200/200" alt="作者头像" class="w-12 h-12 rounded-full object-cover border-2 border-bluewhite">
+              <img src="{{ author.avatar.url }}" alt="作者头像" class="w-12 h-12 rounded-full object-cover border-2 border-bluewhite">
               <div>
                 <div class="flex items-center gap-2">
-                  <h3 class="font-semibold text-gray-800">{{ work.user.username }}</h3>
+                  <h3 class="font-semibold text-gray-800">{{ author.name }}</h3>
                   <span class="bg-bluewhite/10 text-bluewhite text-xs px-2 py-0.5 rounded-full">官方认证</span>
                 </div>
                 <p class="text-sm text-gray-500">{{ work.created_at|date:"Y-m-d H:i" }} 发布</p>
@@ -95,7 +95,7 @@
             {% if images %}
               {% for image in images %}
                 <img
-                  src="{% static image.image %}"
+                  src="{{ image.image.url }}"
                   alt="{{ work.title }} 图片 {{ forloop.counter }}"
                   class="w-full object-cover rounded-lg cursor-pointer hover:opacity-90 transition {% if forloop.first %}h-full main-image{% else %}h-48{% endif %}"
                 >
@@ -138,7 +138,7 @@
             <div class="flex flex-wrap gap-2 mb-6">
               {% if tags %}
                 {% for tag in tags %}
-                  <span class="bg-gray-100 text-gray-600 text-xs px-3 py-1 rounded-full">{{ tag.name }}</span>
+                  <span class="bg-gray-100 text-bluewhite text-xs px-3 py-1 rounded-full">{{ tag.name }}</span>
                 {% endfor %}
               {% else %}
                 <span class="text-xs text-gray-400">暂无标签</span>
@@ -148,19 +148,23 @@
             <!-- 互动区 -->
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
               <div class="flex items-center gap-6">
-                <button class="like-btn flex items-center gap-2 text-gray-600 hover:text-goldline transition">
+                <button class="like-btn flex items-center gap-2 text-gray-600 hover:text-goldline transition {% if is_liked %}active{% endif %}" data-work-id="{{ work.id }}">
                   <iconify-icon icon="mdi:heart" class="w-5 h-5"></iconify-icon>
-                  <span>{{ work.likes_count }} 喜欢</span>
+                  <span id="like-count">{{ work.likes_count }} 喜欢</span>
                 </button>
                 <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
                   <iconify-icon icon="mdi:comment" class="w-5 h-5"></iconify-icon>
-                  <span>{{ work.comments_count }} 评论</span>
+                  <span class="comments-count">{{ work.comments_count }} 评论</span>
                 </button>
-              </div>
-              <div>
                 <button class="text-gray-600 hover:text-bluewhite transition flex items-center gap-1">
                   <iconify-icon icon="mdi:eye" class="w-4 h-4"></iconify-icon>
                   <span class="text-sm">{{ work.views_count }} 浏览</span>
+                </button>
+              </div>
+              <div>
+                <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+                  <iconify-icon icon="mdi:share-variant"></iconify-icon>
+                    <span>分享</span>
                 </button>
               </div>
             </div>
@@ -170,103 +174,35 @@
         <!-- 评论区 -->
         <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8">
           <div class="p-6 border-b border-gray-100">
-            <h3 class="text-xl font-bold text-gray-800">作品评论 (32)</h3>
+            <h3 class="text-xl font-bold text-gray-800">作品评论 <span class="comments-count">({{ work.comments_count }})</span></h3>
           </div>
           
           <!-- 评论输入框 -->
-          <div class="p-6 border-b border-gray-100">
-            <div class="flex gap-4">
-              <img src="https://picsum.photos/id/64/200/200" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
-              <div class="flex-1">
-                <textarea placeholder="分享你的看法..." class="w-full border border-gray-200 rounded-lg p-3 focus:border-bluewhite focus:ring-1 focus:ring-bluewhite outline-none transition resize-none" rows="3"></textarea>
-                <div class="flex justify-end mt-3">
-                  <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
-                    发表评论
-                  </button>
+            <div class="p-6 border-b border-gray-100">
+              <div class="flex gap-4">
+                {% if user.is_authenticated %}
+                  <img src="{{ user.avatar.url }}" alt="用户头像" class="w-10 h-10 rounded-full object-cover">
+                {% else %}
+                  <div class="w-10 h-10 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite font-medium">
+                    <iconify-icon icon="mdi:account-circle-outline" class="w-15 h-15"></iconify-icon>
+                  </div>
+                {% endif %}
+                <div class="flex-1">
+                  <textarea id="comment-content" placeholder="分享你的看法..." class="w-full border border-gray-200 rounded-lg p-3 focus:border-bluewhite focus:ring-1 focus:ring-bluewhite outline-none transition resize-none" rows="3"></textarea>
+                  <div class="flex justify-end mt-3">
+                    <button id="submit-comment" class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
+                      发表评论
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           
           <!-- 评论列表 -->
-          <div class="divide-y divide-gray-100">
-            <!-- 评论项1 -->
-            <div class="comment-item p-6">
-              <div class="flex gap-4">
-                <img src="https://picsum.photos/id/62/200/200" alt="评论者头像" class="w-10 h-10 rounded-full object-cover">
-                <div class="flex-1">
-                  <div class="flex items-center justify-between mb-1">
-                    <h4 class="font-medium text-gray-800">陶瓷收藏者</h4>
-                    <span class="text-xs text-gray-500">2天前</span>
-                  </div>
-                  <p class="text-gray-600 mb-3">这套釉里红的发色非常漂亮，层次感很强，请问是否支持定制图案？</p>
-                  <div class="flex items-center gap-4">
-                    <button class="text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1">
-                      <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
-                      <span>24</span>
-                    </button>
-                    <button class="text-gray-500 hover:text-bluewhite text-sm transition">回复</button>
-                  </div>
-                  
-                  <!-- 作者回复 -->
-                  <div class="mt-4 ml-6 pl-4 border-l-2 border-gray-100">
-                    <div class="flex gap-3">
-                      <img src="https://picsum.photos/id/22/200/200" alt="工作室头像" class="w-8 h-8 rounded-full object-cover border border-bluewhite">
-                      <div>
-                        <div class="flex items-center gap-2 mb-1">
-                          <h5 class="font-medium text-gray-800 text-sm">青韵陶艺工作室</h5>
-                          <span class="bg-bluewhite/10 text-bluewhite text-xs px-1.5 py-0.5 rounded">作者</span>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-2">感谢关注，支持定制图案，需要额外支付30%的设计费用，周期会延长15天左右。</p>
-                        <span class="text-xs text-gray-500">1天前</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 评论项2 -->
-            <div class="comment-item p-6">
-              <div class="flex gap-4">
-                <img src="https://picsum.photos/id/65/200/200" alt="评论者头像" class="w-10 h-10 rounded-full object-cover">
-                <div class="flex-1">
-                  <div class="flex items-center justify-between mb-1">
-                    <h4 class="font-medium text-gray-800">茶道爱好者</h4>
-                    <span class="text-xs text-gray-500">3天前</span>
-                  </div>
-                  <p class="text-gray-600 mb-3">茶壶的容量大概是多少？适合几人使用？想入手一套家用。</p>
-                  <div class="flex items-center gap-4">
-                    <button class="text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1">
-                      <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
-                      <span>12</span>
-                    </button>
-                    <button class="text-gray-500 hover:text-bluewhite text-sm transition">回复</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- 评论项3 -->
-            <div class="comment-item p-6">
-              <div class="flex gap-4">
-                <img src="https://picsum.photos/id/66/200/200" alt="评论者头像" class="w-10 h-10 rounded-full object-cover">
-                <div class="flex-1">
-                  <div class="flex items-center justify-between mb-1">
-                    <h4 class="font-medium text-gray-800">古韵轩主</h4>
-                    <span class="text-xs text-gray-500">3天前</span>
-                  </div>
-                  <p class="text-gray-600 mb-3">缠枝莲纹的绘制很见功底，线条流畅自然，釉色也很正，是难得的好作品。</p>
-                  <div class="flex items-center gap-4">
-                    <button class="text-gray-500 hover:text-goldline text-sm transition flex items-center gap-1">
-                      <iconify-icon icon="mdi:heart-outline" class="w-4 h-4"></iconify-icon>
-                      <span>36</span>
-                    </button>
-                    <button class="text-gray-500 hover:text-bluewhite text-sm transition">回复</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="comments-list divide-y divide-gray-100">
+              {% for comment in comments %}
+                {% include 'appreciation/_comment.html' %}
+              {% endfor %}
           </div>
           
           <!-- 加载更多评论 -->
@@ -427,21 +363,63 @@
     </div>
   </div>
 </section>
+<!-- 删除评论模态框 -->
+  <div id="delete-comment-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl w-full max-w-sm shadow-lg">
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <h3 class="text-lg font-bold text-gray-800">删除评论</h3>
+        <button id="delete-comment-cancel-icon" class="text-gray-400 hover:text-gray-600">
+          <iconify-icon icon="mdi:close" class="text-xl"></iconify-icon>
+        </button>
+      </div>
+      <div class="px-6 py-5">
+        <p class="text-sm text-gray-700 mb-2">
+          确定要删除这条评论及其所有回复吗？删除后将无法恢复。
+        </p>
+      </div>
+      <div class="px-6 py-4 bg-gray-50 flex justify-end gap-3 rounded-b-xl">
+        <button id="delete-comment-cancel-btn" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm hover:bg-gray-100 transition">
+          取消
+        </button>
+        <button id="delete-comment-confirm-btn" class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm hover:bg-red-600 transition">
+          确认删除
+        </button>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
   // 点赞功能
   document.querySelector('.like-btn').addEventListener('click', function() {
-    this.classList.toggle('active');
-    const likeCount = this.querySelector('span');
-    let count = parseInt(likeCount.textContent);
-    
-    if (this.classList.contains('active')) {
-      likeCount.textContent = `${count + 1} 喜欢`;
-    } else {
-      likeCount.textContent = `${count - 1} 喜欢`;
-    }
+    const workId = this.dataset.workId;
+    const likeCountElement = document.getElementById('like-count');
+
+    // 发送AJAX请求
+    fetch(`{% url 'appreciation:toggle_like' work.id %}`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // 更新按钮状态
+        document.querySelector('.like-btn').classList.toggle('active', data.is_liked);
+        // 更新点赞数
+        likeCountElement.textContent = `${data.likes_count} 喜欢`;
+      } else {
+        alert('操作失败: ' + (data.error || '未知错误'));
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('操作失败，请稍后重试');
+    });
   });
   
   // 图片查看功能
@@ -453,5 +431,385 @@
       // 实际项目中可以使用模态框展示大图
     });
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取CSRF令牌的辅助函数
+    function getCSRFToken() {
+        const csrfElement = document.querySelector('meta[name="csrf-token"]');
+        return csrfElement ? csrfElement.getAttribute('content') : '{{ csrf_token }}';
+    }
+
+    // 提交评论
+    const submitCommentBtn = document.getElementById('submit-comment');
+    if (submitCommentBtn) {
+        submitCommentBtn.addEventListener('click', function() {
+            const commentContent = document.getElementById('comment-content');
+            const content = commentContent.value.trim();
+    
+            if (!content) {
+                alert('评论内容不能为空');
+                return;
+            }
+    
+            // 构建表单数据
+            const formData = new URLSearchParams();
+            formData.append('content', content);
+            formData.append('csrfmiddlewaretoken', getCSRFToken());
+    
+            // 发送POST请求
+            fetch('{% url "appreciation:add_comment" work.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 清空输入框
+                    commentContent.value = '';
+    
+                    // 添加新评论到列表顶部
+                    const commentsList = document.querySelector('.comments-list');
+                    if (commentsList) {
+                        commentsList.insertAdjacentHTML('afterbegin', data.comment_html);
+                    }
+    
+                    // 更新评论数
+                    const commentsCountElements = document.querySelectorAll('.comments-count');
+                    commentsCountElements.forEach(element => {
+                        element.textContent = data.comments_count;
+                    });
+                } else {
+                    alert('评论失败: ' + (data.error || '未知错误'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('评论失败，请稍后重试');
+            });
+        });
+    }
+
+    // 评论点赞
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.comment-like-btn')) {
+            const likeBtn = e.target.closest('.comment-like-btn');
+            const commentId = likeBtn.dataset.commentId;
+
+            // 构建表单数据
+            const formData = new URLSearchParams();
+            formData.append('csrfmiddlewaretoken', getCSRFToken());
+
+            // 发送POST请求
+            fetch('{% url "appreciation:toggle_comment_like" 0 %}'.replace('0', commentId), {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 更新点赞数
+                    const likeCount = likeBtn.querySelector('.like-count');
+                    if (likeCount) {
+                        likeCount.textContent = data.likes_count;
+                    }
+
+                    // 更新按钮样式
+                    if (data.is_liked) {
+                        likeBtn.classList.add('liked');
+                    } else {
+                        likeBtn.classList.remove('liked');
+                    }
+                } else {
+                    alert('操作失败: ' + (data.error || '未知错误'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('操作失败，请稍后重试');
+            });
+        }
+    });
+
+    // 显示/隐藏回复表单
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.reply-btn')) {
+            const replyBtn = e.target.closest('.reply-btn');
+            const commentId = replyBtn.dataset.commentId;
+            const replyForm = document.getElementById('reply-form-' + commentId);
+
+            // 隐藏其他所有回复表单
+            const allReplyForms = document.querySelectorAll('.reply-form');
+            allReplyForms.forEach(form => {
+                if (form !== replyForm) {
+                    form.style.display = 'none';
+                }
+            });
+
+            // 切换当前回复表单的显示状态
+            if (replyForm) {
+                if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+                    replyForm.style.display = 'block';
+                } else {
+                    replyForm.style.display = 'none';
+                }
+            }
+        }
+    });
+
+    // 取消回复
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.cancel-reply-btn')) {
+            const cancelBtn = e.target.closest('.cancel-reply-btn');
+            const commentId = cancelBtn.dataset.commentId;
+            const replyForm = document.getElementById('reply-form-' + commentId);
+
+            if (replyForm) {
+                replyForm.style.display = 'none';
+            }
+        }
+    });
+
+    // 提交回复
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.submit-reply-btn')) {
+            const submitBtn = e.target.closest('.submit-reply-btn');
+            const commentId = submitBtn.dataset.commentId;
+            const replyForm = document.getElementById('reply-form-' + commentId);
+            const replyContent = replyForm.querySelector('.reply-content');
+            const content = replyContent.value.trim();
+
+            if (!content) {
+                alert('回复内容不能为空');
+                return;
+            }
+
+            // 构建表单数据
+            const formData = new URLSearchParams();
+            formData.append('content', content);
+            formData.append('parent_id', commentId);
+            formData.append('csrfmiddlewaretoken', getCSRFToken());
+
+            // 发送POST请求
+            fetch('{% url "appreciation:add_comment" work.id %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData,
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 清空输入框并隐藏回复表单
+                    replyContent.value = '';
+                    replyForm.style.display = 'none';
+
+                    // 添加新回复到评论下
+                    const replyBtn = document.querySelector('.reply-btn[data-comment-id="' + commentId + '"]');
+                    let commentItem = replyBtn.closest('.comment-item');
+                    
+                    // 查找被回复的用户名称
+                    const replyToElement = replyBtn.closest('.mt-4.ml-6.pl-4.border-l-2.border-gray-100') || replyBtn.closest('.comment-item');
+                    const parentUserName = replyToElement.querySelector('h4, h5').textContent;
+                    
+                    // 确保所有回复都添加到最外层评论的回复列表中
+                    // 查找当前评论/回复所属的最外层评论容器
+                    let repliesList;
+                    
+                    // 检查是否是回复一个回复
+                    if (replyBtn.closest('.mt-4.ml-6.pl-4.border-l-2.border-gray-100')) {
+                        // 如果是回复一个回复，找到该回复所在的评论容器
+                        // 即找到最近的.comment-item元素
+                        const replyElement = replyBtn.closest('.mt-4.ml-6.pl-4.border-l-2.border-gray-100');
+                        commentItem = replyElement.closest('.comment-item');
+                    }
+                    
+                    // 查找或创建评论的回复列表容器
+                    repliesList = commentItem.querySelector('.replies-list');
+                    
+                    if (!repliesList) {
+                        // 创建replies-list容器
+                        repliesList = document.createElement('div');
+                        repliesList.className = 'replies-list';
+                        
+                        // 将replies-list容器添加到评论下方
+                        const interactionButtons = commentItem.querySelector('.flex.items-center.gap-4');
+                        interactionButtons.insertAdjacentElement('afterend', repliesList);
+                    }
+
+                    // 直接使用服务器返回的HTML结构，确保回复具有正确的样式和嵌套关系
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data.comment_html;
+                    const newElement = tempDiv.firstElementChild;
+                    
+                    // 直接添加到回复列表
+                    repliesList.appendChild(newElement);
+
+                    // 更新评论数
+                    const commentsCount = document.querySelector('.comments-count');
+                    if (commentsCount) {
+                        commentsCount.textContent = data.comments_count;
+                    }
+                } else {
+                    alert('回复失败: ' + (data.error || '未知错误'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('回复失败，请稍后重试');
+            });
+        }
+    });
+
+    // 删除按钮样式保持默认
+
+    // 删除评论模态框相关元素
+    const deleteCommentModal = document.getElementById('delete-comment-modal');
+    const deleteCommentCancelIcon = document.getElementById('delete-comment-cancel-icon');
+    const deleteCommentCancelBtn = document.getElementById('delete-comment-cancel-btn');
+    const deleteCommentConfirmBtn = document.getElementById('delete-comment-confirm-btn');
+    let currentCommentId = null;
+
+    // 显示删除评论模态框
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.delete-comment-btn')) {
+            const deleteBtn = e.target.closest('.delete-comment-btn');
+            currentCommentId = deleteBtn.dataset.commentId;
+            deleteCommentModal.classList.remove('hidden');
+        }
+    });
+
+    // 隐藏删除评论模态框
+    function hideDeleteCommentModal() {
+        deleteCommentModal.classList.add('hidden');
+        currentCommentId = null;
+    }
+
+    // 点击取消图标或按钮隐藏模态框
+    deleteCommentCancelIcon.addEventListener('click', hideDeleteCommentModal);
+    deleteCommentCancelBtn.addEventListener('click', hideDeleteCommentModal);
+
+    // 确认删除评论
+    deleteCommentConfirmBtn.addEventListener('click', function() {
+        if (!currentCommentId) return;
+
+        // 构建表单数据
+        const formData = new URLSearchParams();
+        formData.append('csrfmiddlewaretoken', getCSRFToken());
+
+        // 发送POST请求
+        fetch('{% url "appreciation:delete_comment" 0 %}'.replace('0', currentCommentId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData,
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // 找到要删除的评论项
+                const deleteBtn = document.querySelector('.delete-comment-btn[data-comment-id="' + currentCommentId + '"]');
+                let commentItem;
+                
+                // 检查是评论还是回复
+                if (deleteBtn.closest('.comment-item')) {
+                    // 是主评论
+                    commentItem = deleteBtn.closest('.comment-item');
+                } else {
+                    // 是回复
+                    commentItem = deleteBtn.closest('.mt-4.ml-6.pl-4.border-l-2.border-gray-100');
+                }
+                
+                // 移除评论项
+                if (commentItem) {
+                    commentItem.remove();
+                }
+
+                // 更新评论数
+                const commentsCountElements = document.querySelectorAll('.comments-count');
+                commentsCountElements.forEach(element => {
+                    element.textContent = data.comments_count;
+                });
+            } else {
+                alert('删除失败: ' + (data.error || '未知错误'));
+            }
+            
+            // 隐藏模态框
+            hideDeleteCommentModal();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('删除失败，请稍后重试');
+            hideDeleteCommentModal();
+        });
+    });
+
+    // 点击模态框外部关闭模态框
+    deleteCommentModal.addEventListener('click', function(e) {
+        if (e.target === deleteCommentModal) {
+            hideDeleteCommentModal();
+        }
+    });
+
+    // 加载更多评论（如果需要分页）
+    const loadMoreBtn = document.getElementById('load-more-comments');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            const nextPage = loadMoreBtn.dataset.nextPage;
+            if (!nextPage) return;
+
+            // 构建查询参数
+            const params = new URLSearchParams();
+            params.append('page', nextPage);
+
+            // 发送GET请求
+            fetch('{% url "appreciation:get_comments" work.id %}?' + params.toString(), {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 添加评论到列表
+                    const commentsList = document.querySelector('.comments-list');
+                    if (commentsList) {
+                        commentsList.insertAdjacentHTML('beforeend', data.comments_html);
+                    }
+
+                    // 更新加载更多按钮
+                    if (data.has_next) {
+                        loadMoreBtn.dataset.nextPage = data.next_page;
+                    } else {
+                        loadMoreBtn.style.display = 'none';
+                    }
+                } else {
+                    alert('加载评论失败: ' + (data.error || '未知错误'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('加载评论失败，请稍后重试');
+            });
+        });
+    }
+});
 </script>
 {% endblock %}

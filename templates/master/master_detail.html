@@ -1,0 +1,916 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}王怀俊大师 - 景德窑韵{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* 内容区块初始隐藏 */
+  .content-section {
+    display: none;
+  }
+
+  /* 当前激活的内容区块显示 */
+  .content-section.active {
+    display: block;
+  }
+
+   /* 导航按钮激活状态样式 */
+  .nav-tab.active {
+    color: #2A5CAA; 
+    font-weight: 500;
+    border-bottom: 2px solid #2A5CAA; 
+  }
+
+  /* 作品网格布局 */
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .work-item {
+    transition: all 0.3s ease;
+  }
+
+  .work-item:hover {
+    transform: translateY(-8px);
+  }
+
+  /* 工作室图片预览 */
+  .studio-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .studio-gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .studio-gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 定制表单样式 */
+  .custom-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .custom-form-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <!-- 大师头部横幅 -->
+  <section class="relative h-[500px] overflow-hidden">
+    <img src="https://picsum.photos/id/91/1600/800" alt="王怀俊大师" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+
+    <div class="relative h-full flex flex-col justify-end px-10 max-w-6xl mx-auto pb-12">
+      <div class="flex flex-col md:flex-row items-start md:items-end gap-8">
+        <div class="relative">
+          <img src="https://picsum.photos/id/91/300/300" alt="王怀俊大师肖像" class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-white shadow-lg">
+          <div class="absolute -bottom-2 -right-2 bg-goldline text-white text-sm px-3 py-1 rounded-full shadow-md">
+            国家级大师
+          </div>
+        </div>
+
+        <div class="text-white">
+          <div class="flex items-center gap-3 mb-3">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold">王怀俊</h1>
+            <span class="bg-bluewhite/20 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full">非遗传承人</span>
+          </div>
+
+          <p class="text-xl opacity-90 mb-4">青花瓷领域 · 从业50年</p>
+
+          <div class="flex flex-wrap gap-4 mb-6">
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="mdi:award" class="text-goldline"></iconify-icon>
+              <span>8项国际奖项</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="mdi:palette" class="text-goldline"></iconify-icon>
+              <span>42件代表作品</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="mdi:users" class="text-goldline"></iconify-icon>
+              <span>12名弟子</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <iconify-icon icon="mdi:eye" class="text-goldline"></iconify-icon>
+              <span>12.5k 关注</span>
+            </div>
+          </div>
+
+          <div class="flex gap-4">
+            <button class="bg-goldline text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-90 transition flex items-center gap-2">
+              <iconify-icon icon="mdi:heart-plus"></iconify-icon>
+              关注大师
+            </button>
+            <button class="bg-white bg-opacity-20 backdrop-blur-sm text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-30 transition flex items-center gap-2">
+              <iconify-icon icon="mdi:message-square-outline"></iconify-icon>
+              预约交流
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 大师内容导航 -->
+  <section class="bg-white shadow-sm sticky">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex overflow-x-auto scrollbar-hide">
+        <button class="nav-tab active px-6 py-4 text-bluewhite font-medium border-b-2 border-bluewhite" data-tab="intro">大师简介</button>
+        <button class="nav-tab px-6 py-4 text-gray-600 hover:text-bluewhite transition" data-tab="works">代表作品</button>
+        <button class="nav-tab px-6 py-4 text-gray-600 hover:text-bluewhite transition" data-tab="dynamics">大师动态</button>
+        <button class="nav-tab px-6 py-4 text-gray-600 hover:text-bluewhite transition" data-tab="studio">工作室</button>
+        <button class="nav-tab px-6 py-4 text-gray-600 hover:text-bluewhite transition" data-tab="custom">定制服务</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 大师详细内容 -->
+  <section class="py-12 px-10">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <!-- 左侧主内容 -->
+      <div class="lg:col-span-2">
+        <!-- 大师简介内容区块 -->
+        <div class="content-section active" id="intro-content">
+          <!-- 大师简介 -->
+          <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-goldline mr-3"></span>
+              大师简介
+            </h2>
+
+            <div class="prose max-w-none text-gray-700 leading-relaxed">
+              <p class="mb-4">
+                王怀俊，1955年生于景德镇陶瓷世家，中国工艺美术大师，国家级非物质文化遗产项目（景德镇手工制瓷技艺）代表性传承人。
+              </p>
+              <p class="mb-4">
+                自幼跟随父亲王步（中国现代青花艺术大师）学习青花技艺，深耕青花瓷领域五十载，形成了独特的艺术风格。其作品既传承了传统青花的典雅韵味，又融入了现代艺术的创新元素，被誉为"当代青花第一人"。
+              </p>
+              <p class="mb-4">
+                王怀俊大师擅长青花分水技法，其作品色彩丰富多变，层次分明，尤其在表现山水、花鸟题材上独具匠心。他首创的"青花泼墨"技法，将中国传统水墨画的意境与青花工艺完美结合，开创了青花瓷艺术的新境界。
+              </p>
+              <p class="mb-4">
+                多年来，王怀俊大师的作品多次作为国礼赠送外国元首，包括《松鹤延年》青花瓶被赠予英国女王伊丽莎白二世，《山水清音》青花缸被联合国教科文组织收藏。其作品《万里江山图》青花巨幅瓷板画以1200万元成交，创当代青花瓷拍卖纪录。
+              </p>
+              <p>
+                作为非遗传承人，王怀俊大师致力于青花瓷技艺的传承与推广，创办"怀俊青花工作室"，培养了12名弟子，其中3人已成为省级工艺美术大师。他还多次在国内外举办陶瓷艺术讲座，出版《青花艺术导论》《王怀俊青花作品集》等专著。
+              </p>
+            </div>
+          </div>
+
+          <!-- 大师成就与荣誉 -->
+          <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-bluewhite mr-3"></span>
+              主要成就与荣誉
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="w-8 h-8 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                    <iconify-icon icon="mdi:trophy"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">2010年</h3>
+                    <p class="text-gray-600">获"中国工艺美术大师"称号</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="w-8 h-8 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                    <iconify-icon icon="mdi:trophy"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">2015年</h3>
+                    <p class="text-gray-600">作品《青花山水》获国际陶瓷艺术博览会金奖</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="w-8 h-8 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                    <iconify-icon icon="mdi:trophy"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">2018年</h3>
+                    <p class="text-gray-600">被授予"国家级非物质文化遗产传承人"称号</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <div class="w-8 h-8 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                    <iconify-icon icon="mdi:trophy"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">2020年</h3>
+                    <p class="text-gray-600">作品《百鸟朝凤》被中国国家博物馆收藏</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="w-8 h-8 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                    <iconify-icon icon="mdi:trophy"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">2022年</h3>
+                    <p class="text-gray-600">获"中国陶瓷艺术终身成就奖"</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start">
+                  <div class="w-8 h-8 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mr-4 flex-shrink-0 mt-1">
+                    <iconify-icon icon="mdi:trophy"></iconify-icon>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-800">2023年</h3>
+                    <p class="text-gray-600">举办"怀俊青花五十年"全球巡回展</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 代表作品内容区块 -->
+        <div class="content-section" id="works-content">
+          <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-goldline mr-3"></span>
+              代表作品
+            </h2>
+
+            <div class="works-grid">
+              <!-- 作品1 -->
+              <div class="work-item bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-64 overflow-hidden">
+                  <img src="https://picsum.photos/id/29/600/400" alt="松鹤延年" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute top-3 left-3 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+                    2018年作
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-800 text-lg mb-1">《松鹤延年》青花瓶</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    采用传统分水技法，描绘松鹤长寿之景，曾作为国礼赠予英国女王。
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-bluewhite font-bold">收藏级</span>
+                    <button class="text-sm bg-goldline/10 text-goldline px-3 py-1 rounded hover:bg-goldline hover:text-white transition">
+                      查看详情
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 作品2 -->
+              <div class="work-item bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-64 overflow-hidden">
+                  <img src="https://picsum.photos/id/30/600/400" alt="山水清音" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute top-3 left-3 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+                    2020年作
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-800 text-lg mb-1">《山水清音》青花缸</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    融合泼墨技法，展现山水意境，被联合国教科文组织永久收藏。
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-bluewhite font-bold">收藏级</span>
+                    <button class="text-sm bg-goldline/10 text-goldline px-3 py-1 rounded hover:bg-goldline hover:text-white transition">
+                      查看详情
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 作品3 -->
+              <div class="work-item bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-64 overflow-hidden">
+                  <img src="https://picsum.photos/id/31/600/400" alt="百鸟朝凤" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute top-3 left-3 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+                    2022年作
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-800 text-lg mb-1">《百鸟朝凤》青花瓷板</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    创新青花技法，描绘百鸟朝凤盛景，被中国国家博物馆收藏。
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-bluewhite font-bold">收藏级</span>
+                    <button class="text-sm bg-goldline/10 text-goldline px-3 py-1 rounded hover:bg-goldline hover:text-white transition">
+                      查看详情
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 作品4 -->
+              <div class="work-item bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-64 overflow-hidden">
+                  <img src="https://picsum.photos/id/32/600/400" alt="梅兰竹菊" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute top-3 left-3 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+                    2021年作
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-800 text-lg mb-1">《梅兰竹菊》四君子套瓶</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    传统题材创新演绎，一套四瓶各有韵味，展现君子品格。
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-bluewhite font-bold">限量版</span>
+                    <button class="text-sm bg-goldline/10 text-goldline px-3 py-1 rounded hover:bg-goldline hover:text-white transition">
+                      查看详情
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 作品5 -->
+              <div class="work-item bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-64 overflow-hidden">
+                  <img src="https://picsum.photos/id/33/600/400" alt="春江花月夜" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute top-3 left-3 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+                    2019年作
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-800 text-lg mb-1">《春江花月夜》瓷板画</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    以唐诗意境创作，采用多层次青花技法，画面富有诗意。
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-bluewhite font-bold">收藏级</span>
+                    <button class="text-sm bg-goldline/10 text-goldline px-3 py-1 rounded hover:bg-goldline hover:text-white transition">
+                      查看详情
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 作品6 -->
+              <div class="work-item bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                <div class="relative h-64 overflow-hidden">
+                  <img src="https://picsum.photos/id/34/600/400" alt="年年有余" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                  <div class="absolute top-3 left-3 bg-bluewhite text-white text-xs px-2 py-1 rounded">
+                    2023年作
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="font-bold text-gray-800 text-lg mb-1">《年年有余》青花盘</h3>
+                  <p class="text-gray-600 text-sm mb-3">
+                    传统吉祥题材，现代手法演绎，适合家居陈设与收藏。
+                  </p>
+                  <div class="flex justify-between items-center">
+                    <span class="text-bluewhite font-bold">限量版</span>
+                    <button class="text-sm bg-goldline/10 text-goldline px-3 py-1 rounded hover:bg-goldline hover:text-white transition">
+                      查看详情
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-10 text-center">
+              <button class="bg-porcelain text-bluewhite py-3 px-8 rounded-full font-medium hover:bg-bluewhite hover:text-white transition">
+                查看全部作品
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 大师动态内容区块 -->
+        <div class="content-section" id="dynamics-content">
+          <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-goldline mr-3"></span>
+              大师动态
+            </h2>
+
+            <div class="space-y-8">
+              <!-- 帖子1 -->
+              <div class="border-b border-gray-100 pb-8">
+                <div class="flex items-start gap-4 mb-4">
+                  <img src="https://picsum.photos/id/91/100/100" alt="王怀俊大师" class="w-12 h-12 rounded-full object-cover">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-bold text-gray-800">王怀俊</h3>
+                      <span class="text-gray-500 text-sm">2023年10月15日</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">
+                      今日在工作室完成了新作品《秋江独钓》的绘制，这件作品尝试了新的青花分水技法，层次感更加丰富。期待烧制后的效果。#青花创作 #艺术感悟
+                    </p>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                  <img src="https://picsum.photos/id/21/600/400" alt="作品创作过程" class="rounded-lg w-full h-40 object-cover">
+                  <img src="https://picsum.photos/id/22/600/400" alt="作品细节" class="rounded-lg w-full h-40 object-cover">
+                  <img src="https://picsum.photos/id/23/600/400" alt="工作室场景" class="rounded-lg w-full h-40 object-cover">
+                </div>
+
+                <div class="flex items-center gap-6 text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+                    <span>128</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:message-outline"></iconify-icon>
+                    <span>36</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:share-outline"></iconify-icon>
+                    <span>24</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 帖子2 -->
+              <div class="border-b border-gray-100 pb-8">
+                <div class="flex items-start gap-4 mb-4">
+                  <img src="https://picsum.photos/id/91/100/100" alt="王怀俊大师" class="w-12 h-12 rounded-full object-cover">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-bold text-gray-800">王怀俊</h3>
+                      <span class="text-gray-500 text-sm">2023年9月28日</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">
+                      今天带弟子们参观了景德镇陶瓷馆的"历代青花精品展"，看到明代永乐、宣德时期的青花珍品，依然为古人的技艺所震撼。传统是根，创新是魂，我们要在传承中不断突破。#传承与创新 #青花文化
+                    </p>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 mb-4">
+                  <img src="https://picsum.photos/id/24/600/400" alt="参观展览" class="rounded-lg w-full h-48 object-cover">
+                  <img src="https://picsum.photos/id/25/600/400" alt="与弟子交流" class="rounded-lg w-full h-48 object-cover">
+                </div>
+
+                <div class="flex items-center gap-6 text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+                    <span>215</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:message-outline"></iconify-icon>
+                    <span>52</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:share-outline"></iconify-icon>
+                    <span>41</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 帖子3 -->
+              <div class="border-b border-gray-100 pb-8">
+                <div class="flex items-start gap-4 mb-4">
+                  <img src="https://picsum.photos/id/91/100/100" alt="王怀俊大师" class="w-12 h-12 rounded-full object-cover">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-bold text-gray-800">王怀俊</h3>
+                      <span class="text-gray-500 text-sm">2023年9月10日</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">
+                      我的"青花技艺传承工作坊"新一期开始招生了，本次将重点传授青花分水"五色"技法。名额有限，有意学习传统青花技艺的年轻朋友可以通过工作室官网报名。#技艺传承 #培养新人
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <img src="https://picsum.photos/id/26/1200/600" alt="工作坊宣传图" class="rounded-lg w-full h-64 object-cover">
+                </div>
+
+                <div class="flex items-center gap-6 text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+                    <span>342</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:message-outline"></iconify-icon>
+                    <span>89</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:share-outline"></iconify-icon>
+                    <span>67</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 帖子4 -->
+              <div>
+                <div class="flex items-start gap-4 mb-4">
+                  <img src="https://picsum.photos/id/91/100/100" alt="王怀俊大师" class="w-12 h-12 rounded-full object-cover">
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="font-bold text-gray-800">王怀俊</h3>
+                      <span class="text-gray-500 text-sm">2023年8月15日</span>
+                    </div>
+                    <p class="text-gray-600 mt-2">
+                      历时半年完成的《万里江山图》青花巨幅瓷板画今日成功烧制完成，这件作品长5.8米，宽1.2米，采用了我独创的"多层青花分水"技法，是对传统青花技艺的一次新突破。#重大创作 #技艺突破
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <img src="https://picsum.photos/id/27/1200/600" alt="万里江山图" class="rounded-lg w-full h-80 object-cover">
+                </div>
+
+                <div class="flex items-center gap-6 text-gray-500">
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:heart-outline"></iconify-icon>
+                    <span>567</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:message-outline"></iconify-icon>
+                    <span>124</span>
+                  </button>
+                  <button class="flex items-center gap-1 hover:text-bluewhite transition">
+                    <iconify-icon icon="mdi:share-outline"></iconify-icon>
+                    <span>98</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 text-center">
+              <button class="bg-porcelain text-bluewhite py-3 px-8 rounded-full font-medium hover:bg-bluewhite hover:text-white transition">
+                查看更多动态
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 工作室内容区块 -->
+        <div class="content-section" id="studio-content">
+          <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-goldline mr-3"></span>
+              怀俊青花工作室
+            </h2>
+
+            <div class="mb-8">
+              <p class="text-gray-700 leading-relaxed mb-6">
+                怀俊青花工作室创立于1998年，位于景德镇市珠山区老厂陶艺区核心位置，是王怀俊大师进行艺术创作、技艺传承和学术交流的重要场所。工作室占地约800平方米，包含创作区、展示区、教学区和材料研究室四个功能区域。
+              </p>
+
+              <p class="text-gray-700 leading-relaxed mb-6">
+                二十多年来，工作室培养了众多青花艺术人才，创作了数百件青花精品，多次承担国家级、省级艺术研究项目，成为景德镇青花瓷艺术传承与创新的重要基地。
+              </p>
+
+              <p class="text-gray-700 leading-relaxed">
+                工作室定期向公众开放，举办青花技艺展示、学术讲座和体验活动，让更多人了解和喜爱青花艺术。
+              </p>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4">工作室环境</h3>
+            <div class="studio-gallery mb-8">
+              <img src="https://picsum.photos/id/28/800/600" alt="工作室环境1" class="rounded-lg w-full h-40 object-cover">
+              <img src="https://picsum.photos/id/35/800/600" alt="工作室环境2" class="rounded-lg w-full h-40 object-cover">
+              <img src="https://picsum.photos/id/36/800/600" alt="工作室环境3" class="rounded-lg w-full h-40 object-cover">
+              <img src="https://picsum.photos/id/37/800/600" alt="工作室环境4" class="rounded-lg w-full h-40 object-cover">
+              <img src="https://picsum.photos/id/38/800/600" alt="工作室环境5" class="rounded-lg w-full h-40 object-cover">
+              <img src="https://picsum.photos/id/39/800/600" alt="工作室环境6" class="rounded-lg w-full h-40 object-cover">
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4">工作室团队</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+              <div class="text-center">
+                <img src="https://picsum.photos/id/64/100/100" alt="张明" class="w-24 h-24 rounded-full object-cover mx-auto mb-2">
+                <h4 class="font-medium text-gray-800">张明</h4>
+                <p class="text-sm text-gray-600">首席弟子 · 省级大师</p>
+              </div>
+              <div class="text-center">
+                <img src="https://picsum.photos/id/65/100/100" alt="李华" class="w-24 h-24 rounded-full object-cover mx-auto mb-2">
+                <h4 class="font-medium text-gray-800">李华</h4>
+                <p class="text-sm text-gray-600">弟子 · 高级工艺美术师</p>
+              </div>
+              <div class="text-center">
+                <img src="https://picsum.photos/id/66/100/100" alt="王丽" class="w-24 h-24 rounded-full object-cover mx-auto mb-2">
+                <h4 class="font-medium text-gray-800">王丽</h4>
+                <p class="text-sm text-gray-600">弟子 · 中级工艺美术师</p>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-4">开放时间与预约</h3>
+            <div class="bg-gray-50 p-6 rounded-lg mb-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <div class="flex items-start mb-4">
+                    <iconify-icon icon="mdi:map-marker" class="text-goldline mt-1 mr-3 w-5 h-5"></iconify-icon>
+                    <span class="text-gray-700">景德镇市珠山区老厂陶艺区A12号</span>
+                  </div>
+                  <div class="flex items-start mb-4">
+                    <iconify-icon icon="mdi:calendar" class="text-goldline mt-1 mr-3 w-5 h-5"></iconify-icon>
+                    <span class="text-gray-700">开放时间：每周三、六 9:00-11:30</span>
+                  </div>
+                  <div class="flex items-start">
+                    <iconify-icon icon="mdi:phone" class="text-goldline mt-1 mr-3 w-5 h-5"></iconify-icon>
+                    <span class="text-gray-700">预约电话：0798-XXXXXXX</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-start mb-4">
+                    <iconify-icon icon="mdi:information" class="text-goldline mt-1 mr-3 w-5 h-5"></iconify-icon>
+                    <span class="text-gray-700">团体参观需提前3天预约，每次参观人数不超过20人</span>
+                  </div>
+                  <div class="flex items-start">
+                    <iconify-icon icon="mdi:ticket" class="text-goldline mt-1 mr-3 w-5 h-5"></iconify-icon>
+                    <span class="text-gray-700">参观费用：50元/人，学生凭学生证半价</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center">
+              <button class="bg-bluewhite text-white py-3 px-8 rounded-full font-bold hover:bg-opacity-90 transition">
+                预约参观工作室
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 定制服务内容区块 -->
+        <div class="content-section" id="custom-content">
+          <div class="bg-white rounded-xl shadow-md p-8 mb-10">
+            <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center">
+              <span class="w-1 h-6 bg-goldline mr-3"></span>
+              大师定制服务
+            </h2>
+
+            <p class="text-gray-700 leading-relaxed mb-8">
+              王怀俊大师提供高端青花瓷定制服务，根据客户需求创作独一无二的艺术珍品。每件定制作品都由大师亲自设计、绘制，融合传统技艺与现代审美，兼具艺术价值与收藏价值。定制作品可作为家族传世之宝、企业高端礼品或重要场所陈设。
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+              <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+                <div class="w-16 h-16 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mx-auto mb-4">
+                  <iconify-icon icon="mdi:palette" class="text-2xl"></iconify-icon>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">收藏级定制</h3>
+                <p class="text-gray-600 text-sm text-center">
+                  根据藏家需求，融合个人审美与文化理念，创作具有传世价值的艺术珍品
+                </p>
+                <div class="mt-4 text-center text-bluewhite font-bold">
+                  起订价：20万元
+                </div>
+              </div>
+
+              <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+                <div class="w-16 h-16 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mx-auto mb-4">
+                  <iconify-icon icon="mdi:briefcase" class="text-2xl"></iconify-icon>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">企业定制</h3>
+                <p class="text-gray-600 text-sm text-center">
+                  结合企业形象与文化内涵，定制高端礼品与文化展示品，彰显品牌实力
+                </p>
+                <div class="mt-4 text-center text-bluewhite font-bold">
+                  起订价：8万元
+                </div>
+              </div>
+
+              <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition">
+                <div class="w-16 h-16 rounded-full bg-bluewhite/10 flex items-center justify-center text-bluewhite mx-auto mb-4">
+                  <iconify-icon icon="mdi:family-tree" class="text-2xl"></iconify-icon>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2 text-center">家族传承定制</h3>
+                <p class="text-gray-600 text-sm text-center">
+                  承载家族故事与精神，创作可世代相传的家族信物，延续文化血脉
+                </p>
+                <div class="mt-4 text-center text-bluewhite font-bold">
+                  起订价：12万元
+                </div>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-6">定制流程</h3>
+            <div class="relative mb-10">
+              <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+
+              <div class="relative pl-14 pb-8">
+                <div class="absolute left-0 w-8 h-8 rounded-full bg-bluewhite flex items-center justify-center text-white font-bold">1</div>
+                <h4 class="text-lg font-bold text-gray-800 mb-2">需求沟通</h4>
+                <p class="text-gray-600">与大师面对面或线上沟通定制需求、主题、预算和时间要求</p>
+              </div>
+
+              <div class="relative pl-14 pb-8">
+                <div class="absolute left-0 w-8 h-8 rounded-full bg-bluewhite flex items-center justify-center text-white font-bold">2</div>
+                <h4 class="text-lg font-bold text-gray-800 mb-2">设计方案</h4>
+                <p class="text-gray-600">大师根据需求创作设计草图，提供3-5套方案供选择</p>
+              </div>
+
+              <div class="relative pl-14 pb-8">
+                <div class="absolute left-0 w-8 h-8 rounded-full bg-bluewhite flex items-center justify-center text-white font-bold">3</div>
+                <h4 class="text-lg font-bold text-gray-800 mb-2">确认付款</h4>
+                <p class="text-gray-600">确认设计方案后，支付50%预付款，签订定制合同</p>
+              </div>
+
+              <div class="relative pl-14 pb-8">
+                <div class="absolute left-0 w-8 h-8 rounded-full bg-bluewhite flex items-center justify-center text-white font-bold">4</div>
+                <h4 class="text-lg font-bold text-gray-800 mb-2">创作制作</h4>
+                <p class="text-gray-600">大师亲自创作，过程中可安排2-3次进度查看</p>
+              </div>
+
+              <div class="relative pl-14">
+                <div class="absolute left-0 w-8 h-8 rounded-full bg-bluewhite flex items-center justify-center text-white font-bold">5</div>
+                <h4 class="text-lg font-bold text-gray-800 mb-2">验收交付</h4>
+                <p class="text-gray-600">作品完成后验收，支付尾款，提供收藏证书和保养手册</p>
+              </div>
+            </div>
+
+            <h3 class="text-xl font-bold text-gray-800 mb-6">预约定制咨询</h3>
+            <form class="space-y-6">
+              <div class="custom-form-grid">
+                <div>
+                  <label class="block text-gray-700 mb-2" for="name">您的姓名</label>
+                  <input class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bluewhite" type="text" id="name" placeholder="请输入您的姓名">
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2" for="phone">联系电话</label>
+                  <input class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bluewhite" type="tel" id="phone" placeholder="请输入您的联系电话">
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2" for="email">电子邮箱</label>
+                  <input class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bluewhite" type="email" id="email" placeholder="请输入您的电子邮箱">
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-2" for="custom-type">定制类型</label>
+                  <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bluewhite" id="custom-type">
+                    <option value="">请选择定制类型</option>
+                    <option value="collection">收藏级定制</option>
+                    <option value="enterprise">企业定制</option>
+                    <option value="family">家族传承定制</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-gray-700 mb-2" for="budget">预算范围</label>
+                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bluewhite" id="budget">
+                  <option value="">请选择预算范围</option>
+                  <option value="5-10">5-10万元</option>
+                  <option value="10-20">10-20万元</option>
+                  <option value="20-50">20-50万元</option>
+                  <option value="50+">50万元以上</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-gray-700 mb-2" for="requirements">定制需求描述</label>
+                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bluewhite min-h-[150px]" id="requirements" placeholder="请描述您的定制需求、主题、用途等信息"></textarea>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="bg-goldline text-white py-3 px-10 rounded-full font-bold hover:bg-opacity-90 transition">
+                  提交定制咨询
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右侧边栏 - 在所有标签页中保持显示 -->
+      <div class="space-y-8">
+
+        <!-- 代表作品快速查看 -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-4 flex justify-between items-center">
+            <span>代表作品</span>
+            <a href="#" class="text-bluewhite text-sm hover:underline" onclick="switchTab('works')">查看全部</a>
+          </h3>
+
+          <div class="space-y-4">
+            <div class="group">
+              <div class="relative rounded-lg overflow-hidden h-40 mb-2">
+                <img src="https://picsum.photos/id/29/600/400" alt="松鹤延年" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+              </div>
+              <h4 class="font-medium text-gray-800">《松鹤延年》青花瓶</h4>
+              <p class="text-sm text-gray-500">2018年作</p>
+            </div>
+
+            <div class="group">
+              <div class="relative rounded-lg overflow-hidden h-40 mb-2">
+                <img src="https://picsum.photos/id/30/600/400" alt="山水清音" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+              </div>
+              <h4 class="font-medium text-gray-800">《山水清音》青花缸</h4>
+              <p class="text-sm text-gray-500">2020年作</p>
+            </div>
+
+            <div class="group">
+              <div class="relative rounded-lg overflow-hidden h-40 mb-2">
+                <img src="https://picsum.photos/id/31/600/400" alt="百鸟朝凤" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+              </div>
+              <h4 class="font-medium text-gray-800">《百鸟朝凤》青花瓷板</h4>
+              <p class="text-sm text-gray-500">2022年作</p>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- 相关大师推荐 -->
+        <div class="bg-white rounded-xl shadow-md p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-4">相关大师推荐</h3>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/id/64/100/100" alt="张松茂大师" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <h4 class="font-medium text-gray-800">张松茂</h4>
+                <p class="text-xs text-gray-500">粉彩瓷领域 · 国家级大师</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/id/65/100/100" alt="李文跃大师" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <h4 class="font-medium text-gray-800">李文跃</h4>
+                <p class="text-xs text-gray-500">颜色釉领域 · 省级大师</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <img src="https://picsum.photos/id/66/100/100" alt="刘远长大师" class="w-12 h-12 rounded-full object-cover">
+              <div>
+                <h4 class="font-medium text-gray-800">刘远长</h4>
+                <p class="text-xs text-gray-500">雕塑瓷领域 · 国家级大师</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // 页面加载完成后执行
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取所有导航标签和内容区块
+    const tabs = document.querySelectorAll('.nav-tab');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    // 为每个导航标签添加点击事件
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        // 获取当前标签对应的内容区块ID
+        const tabId = this.getAttribute('data-tab');
+        const contentId = tabId + '-content';
+
+        // 移除所有标签的激活状态
+        tabs.forEach(t => {
+          t.classList.remove('text-bluewhite', 'font-medium', 'border-b-2', 'border-bluewhite');
+          t.classList.add('text-gray-600', 'hover:text-bluewhite', 'transition');
+        });
+
+        // 为当前点击的标签添加激活状态
+        this.classList.remove('text-gray-600', 'hover:text-bluewhite', 'transition');
+        this.classList.add('text-bluewhite', 'font-medium', 'border-b-2', 'border-bluewhite');
+
+        // 隐藏所有内容区块
+        contentSections.forEach(section => {
+          section.classList.remove('active');
+        });
+
+        // 显示当前标签对应的内容区块
+        document.getElementById(contentId).classList.add('active');
+
+        // 滚动到页面顶部
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // 侧边栏作品快速查看的"查看全部"链接点击事件
+    window.switchTab = function(tabId) {
+      // 找到对应的标签并触发点击事件
+      const targetTab = document.querySelector(`.nav-tab[data-tab="${tabId}"]`);
+      if (targetTab) {
+        targetTab.click();
+      }
+    };
+  });
+</script>
+{% endblock %}

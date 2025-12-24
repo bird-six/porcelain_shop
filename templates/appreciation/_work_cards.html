@@ -1,0 +1,111 @@
+{% for work in works %}
+  <div class="bg-white rounded-xl shadow-md overflow-hidden mb-8 transform transition hover:shadow-lg">
+    <!-- 作者信息（仅头像、昵称、时间和操作按钮） -->
+    <div class="p-6 pb-4">
+      <div class="flex items-center gap-4">
+        <a href="{% url 'user:profile_with_id' work.user.id %}" class="shrink-0">
+          <img src="{{ work.user.avatar.url }}" alt="{{ work.user.username }}的头像" class="w-12 h-12 rounded-full object-cover">
+        </a>
+        <div>
+          <h3 class="font-semibold text-gray-800">
+            <a href="{% url 'user:profile_with_id' work.user.id %}" class="hover:text-bluewhite transition">
+              {{ work.user.name }}
+            </a>
+          </h3>
+          <p class="text-sm text-gray-500">
+            {{ work.created_at|date:"Y-m-d H:i" }} 发布
+          </p>
+        </div>
+        <button class="ml-auto text-gray-400 hover:text-bluewhite">
+          <iconify-icon icon="mdi:dots-vertical"></iconify-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- 作品描述 + 图片统一点击区域：跳转到作品详情 -->
+    <a href="{% url 'appreciation:appreciation_detail' work.id %}" class="block group">
+      <!-- 作品描述 -->
+      <div class="px-6 pt-2 pb-4">
+        <p class="mt-2 text-gray-700">
+          <span class="font-semibold text-lg block mb-2 group-hover:text-bluewhite transition">
+            {{ work.title }}
+          </span>
+          <span class="block text-sm text-gray-700">
+            {{ work.description|truncatechars:120 }}
+          </span>
+        </p>
+      </div>
+
+      <!-- 作品图片 -->
+      {% with work.workimage_set.all as images %}
+        {% if images|length %}
+          <div class="grid grid-cols-2 gap-1">
+            {% for image in images|slice:":2" %}
+              <img src="{{ image.image.url }}" alt="{{ work.title }}" class="w-full h-64 object-cover">
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </a>
+    
+    <!-- 互动区 -->
+    <div class="p-6">
+      <div class="flex items-center gap-6 mb-4">
+        <button class="flex items-center gap-2 text-gray-600 hover:text-goldline transition">
+          <iconify-icon icon="mdi:heart"></iconify-icon>
+          <span>{{ work.likes_count }} 喜欢</span>
+        </button>
+        <button class="flex items-center gap-2 text-gray-600 hover:text-bluewhite transition">
+          <iconify-icon icon="mdi:comment"></iconify-icon>
+          <span>{{ work.comments_count }} 评论</span>
+        </button>
+        <button class="text-gray-600 hover:text-bluewhite transition flex items-center gap-1">
+          <iconify-icon icon="mdi:eye" class="w-4 h-4"></iconify-icon>
+          <span class="text-sm">{{ work.views_count }} 浏览</span>
+        </button>
+      </div>
+      
+      <!-- 购买入口 -->
+      <div class="border-t border-gray-100 pt-4 flex items-center justify-between">
+        {% if work.is_salable %}
+          <div class="text-goldline font-semibold">
+            ¥{{ work.price }}
+          </div>
+          <button class="bg-bluewhite text-white px-6 py-2 rounded-full text-sm hover:bg-opacity-90 transition">
+            立即查看
+          </button>
+        {% else %}
+          <div class="text-gray-400 text-sm">
+            暂不出售
+          </div>
+          <button class="bg-gray-200 text-gray-600 px-6 py-2 rounded-full text-sm cursor-default">
+            仅供欣赏
+          </button>
+        {% endif %}
+      </div>
+    </div>
+    
+    <!-- 评论预览 -->
+    {% if work.top_comments %}
+      <div class="px-6 pb-6 pt-0">
+        <div class="flex items-start gap-3 mb-3">
+          <img src="{{ work.top_comments.0.user.avatar.url }}" alt="评论者头像" class="w-8 h-8 rounded-full object-cover mt-1">
+          <div class="bg-gray-50 p-3 rounded-lg flex-1">
+            <div class="flex items-center justify-between">
+              <h4 class="font-semibold text-bluewhite text-sm">{{ work.top_comments.0.user.name }}</h4>
+              <span class="text-xs text-gray-400">{{ work.top_comments.0.created_at|date:"Y-m-d" }}</span>
+            </div>
+            <p class="text-gray-600 text-sm mt-1">{{ work.top_comments.0.content|truncatechars:50 }}</p>
+            <div class="flex items-center mt-2">
+              <iconify-icon icon="mdi:heart-outline" class="w-3 h-3 text-gray-400 mr-1"></iconify-icon>
+              <span class="text-xs text-gray-400">{{ work.top_comments.0.likes_count }} </span>
+            </div>
+          </div>
+        </div>
+        <button class="text-bluewhite text-sm hover:underline">查看全部评论</button>
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+
+

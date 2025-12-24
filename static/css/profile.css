@@ -59,9 +59,48 @@
 }
 
 /* 确保模态框内容过长时可以滚动 */
+/* 优化模态框滚动体验及滚动条样式 */
 #edit-profile-modal > div {
   max-height: 90vh;
   overflow-y: auto;
-  border: 1px solid #e5e7eb; /* 为模态框添加明显的边框 */
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05); /* 增强阴影效果 */
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  /* 为滚动条预留空间，避免内容被遮挡 */
+  padding-right: 4px;
 }
+
+/* 自定义滚动条样式 */
+#edit-profile-modal > div::-webkit-scrollbar {
+  width: 5px;
+  /* 滚动条位置内缩，减少突兀感 */
+  margin-left: -4px;
+}
+
+#edit-profile-modal > div::-webkit-scrollbar-track {
+  background: transparent; /* 透明轨道，更融入背景 */
+  border-radius: 8px;
+}
+
+#edit-profile-modal > div::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.5); /* 半透明灰色滑块 */
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+#edit-profile-modal > div::-webkit-scrollbar-thumb:hover {
+  background: rgba(79, 70, 229, 0.6); /* 悬停时使用主题色倾向的颜色 */
+}
+
+/* 隐藏滚动条按钮 */
+#edit-profile-modal > div::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 优化滚动行为 */
+#edit-profile-modal > div {
+  scroll-behavior: smooth; /* 平滑滚动 */
+  scrollbar-width: thin; /* 火狐浏览器滚动条样式 */
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent; /* 火狐浏览器滚动条颜色 */
+}
+
+

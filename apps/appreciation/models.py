@@ -54,3 +54,23 @@ class Like(models.Model):
     user = models.ForeignKey('user.User', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ['work', 'user']  # 确保一个用户只能喜欢一次同一作品
+
+class Comment(models.Model):
+    work = models.ForeignKey(Work, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='replies')  # 支持回复功能
+    content = models.TextField()
+    likes_count = models.IntegerField(default=0)  # 评论点赞数
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class CommentLike(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='likes')
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['comment', 'user']  # 确保一个用户只能点赞一次同一评论

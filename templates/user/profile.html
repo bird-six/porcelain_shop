@@ -26,19 +26,26 @@
           <div class="bg-gradient-to-r from-bluewhite to-celadon h-24"></div>
           <div class="px-6 pb-6 -mt-12">
             <div class="w-24 h-24 rounded-full border-4 border-white mx-auto bg-gray-200 overflow-hidden">
-              <img src="https://picsum.photos/id/64/200/200" alt="用户头像" class="w-full h-full object-cover">
+              <img src="{{ user.avatar.url }}" alt="用户头像" class="w-full h-full object-cover">
             </div>
             <div class="text-center mt-4">
               <h3 class="font-bold text-xl text-gray-800">{{ user.name }}</h3>
               <p class="text-gray-500 text-sm mt-1">入驻时间：{{ user.date_joined|date:"Y年m月d日" }}</p>
+              {% if is_viewing_self %}
               <button id="edit-profile-btn" class="mt-4 w-full py-2 border border-bluewhite text-bluewhite rounded-lg hover:bg-bluewhite hover:text-white transition text-sm">
                 编辑资料
               </button>
+              {% else %}
+              <button id="follow-btn" class="mt-4 w-full py-2 border rounded-lg transition text-sm {% if is_following %}bg-bluewhite text-white{% else %}border-bluewhite text-bluewhite hover:bg-bluewhite hover:text-white{% endif %}" data-user-id="{{ user.id }}">
+                {% if is_following %}已关注{% else %}关注{% endif %}
+              </button>
+              {% endif %}
             </div>
           </div>
         </div>
         
         <!-- 个人统计 -->
+        
         <div class="bg-white rounded-xl shadow-md p-6 mb-8">
           <h3 class="font-bold text-gray-800 mb-4">数据统计</h3>
           <div class="grid grid-cols-3 gap-2 text-center">
@@ -56,8 +63,10 @@
             </div>
           </div>
         </div>
+      
         
         <!-- 导航菜单 -->
+        {% if is_viewing_self %}
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
           <div class="p-4 border-b border-gray-100">
             <h3 class="font-bold text-gray-800">个人中心导航</h3>
@@ -82,7 +91,9 @@
             </button>
           </div>
         </div>
+        {% endif %}
       </div>
+    
       
       <!-- 右侧主内容区 -->
       <div class="col-span-9">
@@ -90,181 +101,163 @@
         <div id="my-works" class="profile-content active">
           <div class="bg-white rounded-xl shadow-md p-6 mb-8">
             <div class="flex justify-between items-center mb-6">
+              {% if is_viewing_self %}
               <h2 class="text-2xl font-serif font-bold text-gray-800">我的作品</h2>
-              <button class="bg-goldline text-white py-2 px-6 rounded-full font-medium hover:bg-opacity-90 transition flex items-center gap-2">
+              <a href="{% url 'appreciation:edit_work' %}" class="bg-goldline text-white py-2 px-6 rounded-full font-medium hover:bg-opacity-90 transition flex items-center gap-2">
                 <iconify-icon icon="mdi:plus"></iconify-icon>
                 发布新作品
-              </button>
+              </a>
+              {% else %}
+              <h2 class="text-2xl font-serif font-bold text-gray-800">Ta的作品</h2>
+              {% endif %}
             </div>
-            
+
+            {% if works_page and works_page.object_list %}
             <!-- 作品网格 -->
             <div class="grid grid-cols-3 gap-4">
-              <!-- 作品项 -->
-              <div class="rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group">
-                <div class="relative">
-                  <img src="https://picsum.photos/id/28/400/400" alt="陶瓷作品" class="w-full h-48 object-cover">
-                  <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <div class="flex gap-2">
-                      <button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-bluewhite">
-                        <iconify-icon icon="mdi:pencil"></iconify-icon>
-                      </button>
-                      <button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-red-500">
-                        <iconify-icon icon="mdi:delete"></iconify-icon>
-                      </button>
+                {% for work in works_page %}
+                    <div class="rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group relative cursor-pointer work-card" 
+                         data-detail-url="{% url 'appreciation:appreciation_detail' work.id %}">
+                        <div class="relative">
+                            {% with first_image=work.workimage_set.all|first %}
+                                {% if first_image %}
+                                    <img src="{{ first_image.image.url }}" 
+                                         alt="{{ work.title }}" 
+                                         class="w-full h-48 object-cover">
+                                {% else %}
+                                    <img src="https://picsum.photos/seed/{{ work.id }}/400/400" 
+                                         alt="{{ work.title }}" 
+                                         class="w-full h-48 object-cover">
+                                {% endif %}
+                            {% endwith %}
+        
+                            <!-- 覆盖层：编辑 / 删除按钮，层级高于卡片点击 -->
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition 
+                                        flex items-center justify-center opacity-0 group-hover:opacity-100 z-20 pointer-events-none">
+                                <div class="flex gap-2 pointer-events-auto">
+                                    <!-- 编辑 -->
+                                    <a href="{% url 'appreciation:edit_work_update' work.id %}" 
+                                       class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 
+                                              hover:text-bluewhite work-edit-btn" 
+                                       title="编辑作品">
+                                        <iconify-icon icon="mdi:pencil"></iconify-icon>
+                                    </a>
+        
+                                    <!-- 删除 -->
+                                    <form method="post" 
+                                          action="{% url 'appreciation:delete_work' work.id %}" 
+                                          class="inline-block work-delete-form" 
+                                          data-work-title="{{ work.title }}">
+                                        {% csrf_token %}
+                                        <button type="button" 
+                                                class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 
+                                                       hover:text-red-500 work-delete-btn" 
+                                                title="删除作品">
+                                            <iconify-icon icon="mdi:delete"></iconify-icon>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-                <div class="p-3">
-                  <h3 class="font-medium text-gray-800 text-sm">青花山水纹茶杯</h3>
-                  <div class="flex justify-between items-center mt-2">
-                    <div class="flex items-center text-xs text-gray-500">
-                      <iconify-icon icon="mdi:eye" class="mr-1"></iconify-icon>
-                      <span>248</span>
-                      <iconify-icon icon="mdi:heart" class="ml-2 mr-1"></iconify-icon>
-                      <span>42</span>
-                    </div>
-                    <span class="text-xs text-gray-500">2小时前</span>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- 更多作品项 -->
-              <div class="rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group">
-                <div class="relative">
-                  <img src="https://picsum.photos/id/29/400/400" alt="陶瓷作品" class="w-full h-48 object-cover">
-                  <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <div class="flex gap-2">
-                      <button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-bluewhite">
-                        <iconify-icon icon="mdi:pencil"></iconify-icon>
-                      </button>
-                      <button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-red-500">
-                        <iconify-icon icon="mdi:delete"></iconify-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="p-3">
-                  <h3 class="font-medium text-gray-800 text-sm">釉里红牡丹纹瓶</h3>
-                  <div class="flex justify-between items-center mt-2">
-                    <div class="flex items-center text-xs text-gray-500">
-                      <iconify-icon icon="mdi:eye" class="mr-1"></iconify-icon>
-                      <span>186</span>
-                      <iconify-icon icon="mdi:heart" class="ml-2 mr-1"></iconify-icon>
-                      <span>35</span>
-                    </div>
-                    <span class="text-xs text-gray-500">1天前</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="rounded-lg overflow-hidden shadow-sm hover:shadow-md transition group">
-                <div class="relative">
-                  <img src="https://picsum.photos/id/30/400/400" alt="陶瓷作品" class="w-full h-48 object-cover">
-                  <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition flex items-center justify-center opacity-0 group-hover:opacity-100">
-                    <div class="flex gap-2">
-                      <button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-bluewhite">
-                        <iconify-icon icon="mdi:pencil"></iconify-icon>
-                      </button>
-                      <button class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-700 hover:text-red-500">
-                        <iconify-icon icon="mdi:delete"></iconify-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="p-3">
-                  <h3 class="font-medium text-gray-800 text-sm">粉彩花鸟纹瓷板</h3>
-                  <div class="flex justify-between items-center mt-2">
-                    <div class="flex items-center text-xs text-gray-500">
-                      <iconify-icon icon="mdi:eye" class="mr-1"></iconify-icon>
-                      <span>324</span>
-                      <iconify-icon icon="mdi:heart" class="ml-2 mr-1"></iconify-icon>
-                      <span>78</span>
-                    </div>
-                    <span class="text-xs text-gray-500">3天前</span>
-                  </div>
-                </div>
-              </div>
+                {% endfor %}
             </div>
-            
+        
             <!-- 分页 -->
-            <div class="mt-8 flex justify-center">
-              <div class="flex items-center gap-2">
-                <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-500 hover:border-bluewhite hover:text-bluewhite">
-                  <iconify-icon icon="mdi:chevron-left"></iconify-icon>
-                </button>
-                <button class="w-9 h-9 rounded-lg bg-bluewhite text-white flex items-center justify-center">1</button>
-                <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-700 hover:border-bluewhite hover:text-bluewhite">2</button>
-                <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-700 hover:border-bluewhite hover:text-bluewhite">3</button>
-                <button class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-500 hover:border-bluewhite hover:text-bluewhite">
-                  <iconify-icon icon="mdi:chevron-right"></iconify-icon>
-                </button>
-              </div>
+            {% if works_page.paginator.num_pages > 1 %}
+                <div class="mt-8 flex justify-center">
+                    <div class="flex items-center gap-2">
+                        <!-- 上一页 -->
+                        {% if works_page.has_previous %}
+                            <a href="?page={{ works_page.previous_page_number }}" 
+                               class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-500 
+                                      hover:border-bluewhite hover:text-bluewhite">
+                                <iconify-icon icon="mdi:chevron-left"></iconify-icon>
+                            </a>
+                        {% else %}
+                            <span class="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-300">
+                                <iconify-icon icon="mdi:chevron-left"></iconify-icon>
+                            </span>
+                        {% endif %}
+        
+                        <!-- 页码列表 -->
+                        {% for num in works_page.paginator.page_range %}
+                            {% if num == works_page.number %}
+                                <span class="w-9 h-9 rounded-lg bg-bluewhite text-white flex items-center justify-center">
+                                    {{ num }}
+                                </span>
+                            {% else %}
+                                <a href="?page={{ num }}" 
+                                   class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-700 
+                                          hover:border-bluewhite hover:text-bluewhite">
+                                    {{ num }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+        
+                        <!-- 下一页 -->
+                        {% if works_page.has_next %}
+                            <a href="?page={{ works_page.next_page_number }}" 
+                               class="w-9 h-9 rounded-lg border border-gray-300 flex items-center justify-center text-gray-500 
+                                      hover:border-bluewhite hover:text-bluewhite">
+                                <iconify-icon icon="mdi:chevron-right"></iconify-icon>
+                            </a>
+                        {% else %}
+                            <span class="w-9 h-9 rounded-lg border border-gray-200 flex items-center justify-center text-gray-300">
+                                <iconify-icon icon="mdi:chevron-right"></iconify-icon>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        
+        {% else %}
+            <!-- 无作品提示 -->
+            <div class="py-12 text-center text-gray-500">
+                <p>还没有发布任何作品，点击右上角“发布新作品”开始创作吧～</p>
             </div>
+        {% endif %}
+          
           </div>
         </div>
-        
+      
+      
         <!-- 我的收藏 -->
         <div id="collections" class="profile-content">
           <div class="bg-white rounded-xl shadow-md p-6">
             <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6">我的收藏</h2>
             
             <!-- 收藏列表 -->
+            {% if liked_works %}
             <div class="space-y-6">
-              <!-- 收藏项 -->
+              {% for work in liked_works %}
               <div class="flex gap-4 p-4 border border-gray-100 rounded-lg hover:shadow-sm transition">
-                <img src="https://picsum.photos/id/96/200/200" alt="收藏作品" class="w-20 h-20 object-cover rounded">
-                <div class="flex-1">
-                  <div class="flex justify-between">
-                    <h3 class="font-medium text-gray-800">钧瓷窑变釉盘</h3>
-                    <button class="text-gray-400 hover:text-red-500">
-                      <iconify-icon icon="mdi:heart-remove"></iconify-icon>
-                    </button>
+                <a href="{% url 'appreciation:appreciation_detail' work.id %}" class="flex gap-4 flex-1">
+                  {% with first_image=work.workimage_set.all|first %}
+                    {% if first_image %}
+                      <img src="{{ first_image.image.url }}" alt="{{ work.title }}" class="w-20 h-20 object-cover rounded">
+                    {% else %}
+                      <img src="https://picsum.photos/seed/{{ work.id }}/200/200" alt="{{ work.title }}" class="w-20 h-20 object-cover rounded">
+                    {% endif %}
+                  {% endwith %}
+                  <div class="flex-1">
+                    <div class="flex justify-between">
+                      <h3 class="font-medium text-gray-800">{{ work.title }}</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">{{ work.user.name }} 作品</p>
+                    <div class="flex items-center mt-2 text-xs text-gray-500">
+                      <span>收藏于 {{ work.like_set.first.created_at|date:"Y-m-d" }}</span>
+                    </div>
                   </div>
-                  <p class="text-sm text-gray-500 mt-1">王怀俊大师作品</p>
-                  <div class="flex items-center mt-2 text-xs text-gray-500">
-                    <span>收藏于 2023-10-15</span>
-                    <span class="mx-2">•</span>
-                    <span>青花瓷系列</span>
-                  </div>
-                </div>
+                </a>
               </div>
-              
-              <div class="flex gap-4 p-4 border border-gray-100 rounded-lg hover:shadow-sm transition">
-                <img src="https://picsum.photos/id/91/200/200" alt="收藏作品" class="w-20 h-20 object-cover rounded">
-                <div class="flex-1">
-                  <div class="flex justify-between">
-                    <h3 class="font-medium text-gray-800">粉彩山水纹瓶</h3>
-                    <button class="text-gray-400 hover:text-red-500">
-                      <iconify-icon icon="mdi:heart-remove"></iconify-icon>
-                    </button>
-                  </div>
-                  <p class="text-sm text-gray-500 mt-1">张松茂大师作品</p>
-                  <div class="flex items-center mt-2 text-xs text-gray-500">
-                    <span>收藏于 2023-10-08</span>
-                    <span class="mx-2">•</span>
-                    <span>粉彩瓷系列</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="flex gap-4 p-4 border border-gray-100 rounded-lg hover:shadow-sm transition">
-                <img src="https://picsum.photos/id/65/200/200" alt="收藏作品" class="w-20 h-20 object-cover rounded">
-                <div class="flex-1">
-                  <div class="flex justify-between">
-                    <h3 class="font-medium text-gray-800">颜色釉综合装饰瓶</h3>
-                    <button class="text-gray-400 hover:text-red-500">
-                      <iconify-icon icon="mdi:heart-remove"></iconify-icon>
-                    </button>
-                  </div>
-                  <p class="text-sm text-gray-500 mt-1">李文跃大师作品</p>
-                  <div class="flex items-center mt-2 text-xs text-gray-500">
-                    <span>收藏于 2023-09-25</span>
-                    <span class="mx-2">•</span>
-                    <span>颜色釉系列</span>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
             </div>
+            {% else %}
+              <div class="py-12 text-center text-gray-500">
+                <p>还没有收藏任何作品，快去发现精彩的陶瓷艺术吧～</p>
+              </div>
+            {% endif %}
           </div>
         </div>
         
@@ -275,61 +268,23 @@
             
             <!-- 消息分类 -->
             <div class="flex border-b border-gray-200 mb-6">
-              <button class="py-2 px-4 text-goldline border-b-2 border-goldline font-medium">全部消息</button>
-              <button class="py-2 px-4 text-gray-500 hover:text-gray-700">点赞通知</button>
-              <button class="py-2 px-4 text-gray-500 hover:text-gray-700">评论通知</button>
-              <button class="py-2 px-4 text-gray-500 hover:text-gray-700">系统通知</button>
+              <button class="notification-type-btn py-2 px-4 text-goldline border-b-2 border-goldline font-medium" data-type="">全部消息</button>
+              <button class="notification-type-btn py-2 px-4 text-gray-500 hover:text-gray-700" data-type="like">点赞通知</button>
+              <button class="notification-type-btn py-2 px-4 text-gray-500 hover:text-gray-700" data-type="comment">评论通知</button>
+              <button class="notification-type-btn py-2 px-4 text-gray-500 hover:text-gray-700" data-type="reply">回复通知</button>
+              <button class="notification-type-btn py-2 px-4 text-gray-500 hover:text-gray-700" data-type="system">系统通知</button>
             </div>
             
             <!-- 消息列表 -->
-            <div class="space-y-4">
-              <div class="p-4 bg-bluewhite/5 rounded-lg border border-bluewhite/10">
-                <div class="flex gap-3">
-                  <div class="w-10 h-10 rounded-full bg-bluewhite/20 flex items-center justify-center text-bluewhite flex-shrink-0">
-                    <iconify-icon icon="mdi:heart"></iconify-icon>
-                  </div>
-                  <div class="flex-1">
-                    <p class="text-sm"><span class="font-medium">张明陶艺</span> 点赞了您的作品《青花山水纹茶杯》</p>
-                    <p class="text-xs text-gray-500 mt-1">10分钟前</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="p-4 bg-bluewhite/5 rounded-lg border border-bluewhite/10">
-                <div class="flex gap-3">
-                  <div class="w-10 h-10 rounded-full bg-bluewhite/20 flex items-center justify-center text-bluewhite flex-shrink-0">
-                    <iconify-icon icon="mdi:comment"></iconify-icon>
-                  </div>
-                  <div class="flex-1">
-                    <p class="text-sm"><span class="font-medium">陶瓷爱好者</span> 评论了您的作品："这个釉色太漂亮了，请问用的是什么配方？"</p>
-                    <p class="text-xs text-gray-500 mt-1">1小时前</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="p-4 bg-gray-50 rounded-lg">
-                <div class="flex gap-3">
-                  <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 flex-shrink-0">
-                    <iconify-icon icon="mdi:bell"></iconify-icon>
-                  </div>
-                  <div class="flex-1">
-                    <p class="text-sm">您关注的 <span class="font-medium">王怀俊大师</span> 发布了新作品《青花釉里红牡丹瓶》</p>
-                    <p class="text-xs text-gray-500 mt-1">昨天 15:30</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="p-4 bg-gray-50 rounded-lg">
-                <div class="flex gap-3">
-                  <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 flex-shrink-0">
-                    <iconify-icon icon="mdi:information"></iconify-icon>
-                  </div>
-                  <div class="flex-1">
-                    <p class="text-sm">【系统通知】2023景德镇陶瓷艺术展征稿已开始，点击了解详情。</p>
-                    <p class="text-xs text-gray-500 mt-1">2023-10-15</p>
-                  </div>
-                </div>
-              </div>
+            <div id="notification-list" class="space-y-4">
+              <!-- 动态加载通知 -->
+            </div>
+            
+            <!-- 加载更多按钮 -->
+            <div id="load-more-container" class="mt-6 text-center hidden">
+              <button id="load-more-btn" class="py-2 px-6 border border-bluewhite text-bluewhite rounded-lg hover:bg-bluewhite hover:text-white transition">
+                加载更多
+              </button>
             </div>
           </div>
         </div>
@@ -418,9 +373,10 @@
             </form>
           </div>
         </div>
+      
       </div>
     </div>
-  </div>
+    </div>
 </section>
     
 <!-- 编辑资料模态框 -->
@@ -436,23 +392,26 @@
     </div>
     
     <div class="p-6">
-      <form id="edit-profile-form" enctype="multipart/form-data">
+      <form id="edit-profile-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <!-- 头像编辑部分 -->
+        <div id="profile-message" class="mb-4 text-sm hidden"></div>
+
         <div class="flex flex-col items-center mb-8">
           <div class="relative w-32 h-32 rounded-full border-4 border-white bg-gray-200 overflow-hidden shadow-md">
-            <img id="current-avatar" src="https://picsum.photos/id/64/200/200" alt="当前头像" class="w-full h-full object-cover">
+            <img id="current-avatar" src="{% if user.avatar %}{{ user.avatar.url }}{% else %}https://picsum.photos/id/64/200/200{% endif %}" alt="当前头像" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-40 transition flex items-center justify-center">
               <label for="avatar-upload" class="cursor-pointer w-full h-full flex items-center justify-center">
                 <span class="text-white opacity-0 hover:opacity-100 transition flex flex-col items-center">
                   <iconify-icon icon="mdi:camera" class="text-2xl mb-1"></iconify-icon>
                   <span class="text-sm">更换头像</span>
                 </span>
-                <input type="file" id="avatar-upload" accept="image/*" class="hidden">
+                <input type="file" id="avatar-upload" name="avatar" accept="image/*" class="hidden">
               </label>
             </div>
           </div>
           <p class="text-sm text-gray-500 mt-2">点击上传新头像</p>
-          <p id="avatar-error" class="text-xs text-red-500 hidden mt-1">请上传JPG、PNG或GIF格式的图片</p>
+          <p id="avatar-error" class="text-xs text-red-500 hidden mt-1">请上传JPG、PNG或GIF格式的图片，且小于5MB</p>
         </div>
         
         <!-- 个人信息表单 -->
@@ -466,28 +425,26 @@
           <div>
             <label for="edit-intro" class="block text-sm font-medium text-gray-700 mb-1">个人简介</label>
             <textarea id="edit-intro" name="introduction" rows="4" 
-                    class="form-input block w-full shadow-sm sm:text-sm border-gray-300 rounded-lg p-3 focus:ring-bluewhite focus:border-bluewhite">
-              专注青花瓷创作与研究，传承传统工艺，探索现代审美。
-            </textarea>
+                    class="form-input block w-full shadow-sm sm:text-sm border-gray-300 rounded-lg p-3 focus:ring-bluewhite focus:border-bluewhite">{{ user.introduction }}</textarea>
             <p class="text-xs text-gray-500 mt-1">最多200字</p>
           </div>
           
           <div>
             <label for="edit-email" class="block text-sm font-medium text-gray-700 mb-1">邮箱</label>
-            <input type="email" id="edit-email" name="email" value="linfeng@example.com" 
+            <input type="email" id="edit-email" name="email" value="{{ user.email }}" 
                   class="form-input block w-full shadow-sm sm:text-sm border-gray-300 rounded-lg p-3 focus:ring-bluewhite focus:border-bluewhite">
           </div>
           
           <div class="grid grid-cols-2 gap-6">
             <div>
               <label for="edit-phone" class="block text-sm font-medium text-gray-700 mb-1">手机号码</label>
-              <input type="tel" id="edit-phone" name="phone" 
+              <input type="tel" id="edit-phone" name="phone" value="{{ user.phone }}" 
                     class="form-input block w-full shadow-sm sm:text-sm border-gray-300 rounded-lg p-3 focus:ring-bluewhite focus:border-bluewhite">
             </div>
             
             <div>
               <label for="edit-location" class="block text-sm font-medium text-gray-700 mb-1">所在地</label>
-              <input type="text" id="edit-location" name="location" 
+              <input type="text" id="edit-location" name="location" value="{{ user.location }}" 
                     class="form-input block w-full shadow-sm sm:text-sm border-gray-300 rounded-lg p-3 focus:ring-bluewhite focus:border-bluewhite">
             </div>
           </div>
@@ -502,6 +459,34 @@
       </button>
       <button id="save-edit-btn" class="bg-bluewhite text-white py-2 px-6 rounded-lg hover:bg-opacity-90 transition">
         保存修改
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 作品删除确认模态框 -->
+<div id="delete-work-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white rounded-xl w-full max-w-sm shadow-lg">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <h3 class="text-lg font-bold text-gray-800">删除作品</h3>
+      <button id="delete-work-cancel-icon" class="text-gray-400 hover:text-gray-600">
+        <iconify-icon icon="mdi:close" class="text-xl"></iconify-icon>
+      </button>
+    </div>
+    <div class="px-6 py-5">
+      <p class="text-sm text-gray-700 mb-2">
+        确定要删除该作品吗？删除后将无法恢复。
+      </p>
+      <p class="text-sm text-gray-500">
+        作品名称：<span id="delete-work-title" class="font-medium text-gray-800"></span>
+      </p>
+    </div>
+    <div class="px-6 py-4 bg-gray-50 flex justify-end gap-3 rounded-b-xl">
+      <button id="delete-work-cancel-btn" class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm hover:bg-gray-100 transition">
+        取消
+      </button>
+      <button id="delete-work-confirm-btn" class="px-4 py-2 rounded-lg bg-red-500 text-white text-sm hover:bg-red-600 transition">
+        确认删除
       </button>
     </div>
   </div>

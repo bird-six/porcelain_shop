@@ -9,10 +9,10 @@ from apps.core import views as core_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('apps.core.urls'), name='index'),
-    path('user/', include('apps.user.urls'), name='user'),
+    path('user/', include('apps.user.urls', namespace='user')),
     path('appreciation/', include('apps.appreciation.urls', namespace='appreciation')),
 
-    path('master/', include('apps.master.urls'), name='master'),
+    path('master/', include('apps.master.urls', namespace='master')),
 
 
 
